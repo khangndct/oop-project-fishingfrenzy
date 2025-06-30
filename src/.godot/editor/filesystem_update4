@@ -1,1 +1,12 @@
-res://Scenes/Main/main.tscn
+res://Scenes/Play/Play.tscn
+res://Scenes/Main/Main.tscn
+res://Scenes/Play/node_2d.tscn
+res://Entities/Fish/Fish.tscn
+res://Scenes/Play/Play.gd
+res://Entities/Fish/Fish.gd
+res://Entities/Entity.gd
+res://Entities/Player/Player.tscn
+res://Entities/Player/Player.gd
+res://Entities/Player/entity.tscn
+res://Entities/Rod/Rod.gd
+res://Entities/Rod/Rod.tscn

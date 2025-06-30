@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7elgqy18qob5"]
+
+[ext_resource type="Script" uid="uid://cyetbrsrjop0s" path="res://Scenes/Play/Play.gd" id="1_2ugot"]
+[ext_resource type="Texture2D" uid="uid://dtcxqrt5pxob6" path="res://Scenes/Play/img/background.png" id="1_a0n2g"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_2ugot")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+scale = Vector2(0.833333, 0.703125)
+texture = ExtResource("1_a0n2g")
+
+[node name="StartPoint" type="Marker2D" parent="."]
+position = Vector2(645, 167)

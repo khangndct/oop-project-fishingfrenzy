@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://o2ucne7lhu8g"]
+
+[ext_resource type="Script" uid="uid://b5tfex5ghbf8o" path="res://Entities/Rod/Rod.gd" id="1_w0cmu"]
+[ext_resource type="Texture2D" uid="uid://bvu7atcw1mv5" path="res://Entities/Rod/FishingRodCollection/CommonFR-NS.svg" id="2_1h8tc"]
+[ext_resource type="Texture2D" uid="uid://dgwdtxpbdcdxa" path="res://Entities/Rod/FishingRodCollection/CommonBait.svg" id="3_aovcs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vfja0"]
+size = Vector2(6, 9)
+
+[node name="Rod" type="Node2D"]
+scale = Vector2(1.63709, 1.63709)
+script = ExtResource("1_w0cmu")
+speed = 5
+metadata/_custom_type_script = "uid://b5tfex5ghbf8o"
+
+[node name="Art" type="Sprite2D" parent="."]
+texture = ExtResource("2_1h8tc")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(17, -14)
+
+[node name="Line" type="Line2D" parent="."]
+position = Vector2(0, 9.53674e-07)
+points = PackedVector2Array(17, 17, 17, -14)
+width = 1.0
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(17, 17)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_vfja0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D/CollisionShape2D"]
+position = Vector2(2, 3)
+texture = ExtResource("3_aovcs")

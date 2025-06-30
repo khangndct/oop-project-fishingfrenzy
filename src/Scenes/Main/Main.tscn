@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://u443nlh4cj0v"]
+
+[ext_resource type="Script" uid="uid://c637a06r8f72u" path="res://Scenes/Main/Main.gd" id="1_cmk6n"]
+[ext_resource type="Texture2D" uid="uid://cpl3h6fn4ay0h" path="res://Scenes/Main/img/background.png" id="1_qtv3y"]
+[ext_resource type="Texture2D" uid="uid://b1lk3uykck71w" path="res://Scenes/Main/img/gametitle.svg" id="2_cmk6n"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_cmk6n")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+scale = Vector2(0.833333, 0.703125)
+texture = ExtResource("1_qtv3y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(646, 180)
+scale = Vector2(0.694792, 0.694792)
+texture = ExtResource("2_cmk6n")
+
+[node name="PlayButton" type="Button" parent="."]
+offset_left = 632.0
+offset_top = 313.0
+offset_right = 673.0
+offset_bottom = 344.0
+text = "Play
+"
+
+[node name="ShopButton" type="Button" parent="."]
+offset_left = 629.0
+offset_top = 350.0
+offset_right = 676.0
+offset_bottom = 381.0
+text = "Shop
+"
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = 632.0
+offset_top = 387.0
+offset_right = 674.0
+offset_bottom = 418.0
+text = "Quit
+"
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
