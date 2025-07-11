@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://b28m6n16m40mk"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_k6e7h"]
+[ext_resource type="Texture2D" uid="uid://bvomvunve8onr" path="res://Assets/Img/Fish/Common/GoargeGobbler.png" id="2_rxlkv"]
+
+[resource]
+script = ExtResource("1_k6e7h")
+fish_name = "Goarge Gobbler"
+rarity = "common"
+sprite_texture = ExtResource("2_rxlkv")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

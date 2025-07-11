@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://ds4xcn8b6b5xk"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_wfpab"]
+[ext_resource type="Texture2D" uid="uid://darnedh664j5f" path="res://Assets/Img/Fish/Rare/Thunder.png" id="2_sdmif"]
+
+[resource]
+script = ExtResource("1_wfpab")
+fish_name = "Thunder"
+rarity = 2
+sprite_texture = ExtResource("2_sdmif")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

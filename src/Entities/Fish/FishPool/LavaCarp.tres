@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://4r0ckrfdnd0f"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_yuyl8"]
+[ext_resource type="Texture2D" uid="uid://mfi5dgof7lo5" path="res://Assets/Img/Fish/Uncommon/LavaCarp.png" id="2_harqa"]
+
+[resource]
+script = ExtResource("1_yuyl8")
+fish_name = "Lava Carp"
+rarity = 1
+sprite_texture = ExtResource("2_harqa")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

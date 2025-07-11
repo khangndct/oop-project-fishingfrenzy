@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://snquefnr62l8"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_r4tp2"]
+[ext_resource type="Texture2D" uid="uid://b7is8kttttix3" path="res://Assets/Img/Fish/Rare/SirenFish.png" id="2_ia4g5"]
+
+[resource]
+script = ExtResource("1_r4tp2")
+fish_name = "Siren Fish"
+rarity = 2
+sprite_texture = ExtResource("2_ia4g5")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

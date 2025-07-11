@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://cjhdvtwdgkbd2"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_8tj4a"]
+[ext_resource type="Texture2D" uid="uid://jmswks5vlbx6" path="res://Assets/Img/Fish/Epic/LeviathanFry.png" id="2_ngc0o"]
+
+[resource]
+script = ExtResource("1_8tj4a")
+fish_name = "Leviathan Fry"
+rarity = 3
+sprite_texture = ExtResource("2_ngc0o")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

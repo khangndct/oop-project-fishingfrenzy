@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://2vdy6etoboqk"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_upvdm"]
+[ext_resource type="Texture2D" uid="uid://xakj7nqyhxf8" path="res://Assets/Img/Fish/Legendary/CelestialKoi.png" id="2_qo7g6"]
+
+[resource]
+script = ExtResource("1_upvdm")
+fish_name = "Celestial Koi"
+rarity = 4
+sprite_texture = ExtResource("2_qo7g6")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

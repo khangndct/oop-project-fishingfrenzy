@@ -1,19 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2amqlojjtkqy"]
+[gd_scene load_steps=3 format=3 uid="uid://ca62q5t15kxic"]
 
-[ext_resource type="Script" path="res://Entities/Entity.gd" id="1_3dnbe"]
-[ext_resource type="Texture2D" uid="uid://byh7p1xvbojpi" path="res://Entities/Fish/CommonFish/BasicKoi.png" id="2_3qwab"]
+[ext_resource type="Script" uid="uid://bkeaua2i7nh3e" path="res://Entities/Fish/Fish.gd" id="1_3dnbe"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3qwab"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3dnbe"]
 
-[node name="Entity" type="Node2D"]
+[node name="Fish" type="Node2D"]
+scale = Vector2(3.56713, 3.56713)
 script = ExtResource("1_3dnbe")
-metadata/_custom_type_script = "uid://bqnxuhccem1js"
+metadata/_custom_type_script = "uid://bkeaua2i7nh3e"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_3qwab")
 
-[node name="Area2D" type="Area2D" parent="."]
-disable_mode = 1
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_3qwab")
+[node name="FishArea" type="Area2D" parent="." groups=["fish"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FishArea"]
+shape = SubResource("CircleShape2D_3dnbe")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="area_entered" from="FishArea" to="." method="_on_fish_area_area_entered"]

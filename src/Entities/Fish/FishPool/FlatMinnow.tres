@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://dd7821qfbnkwf"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_y3ui7"]
+[ext_resource type="Texture2D" uid="uid://bbd4h2opeohi4" path="res://Assets/Img/Fish/Common/FlatMinnow.png" id="2_562jy"]
+
+[resource]
+script = ExtResource("1_y3ui7")
+fish_name = "Flat Minnow"
+rarity = "common"
+sprite_texture = ExtResource("2_562jy")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

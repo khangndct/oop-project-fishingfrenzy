@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://81lcsq5mrjjn"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_f8ft8"]
+[ext_resource type="Texture2D" uid="uid://crobe00wdv2ox" path="res://Assets/Img/Fish/Uncommon/Bubblefin.png" id="2_q12hd"]
+
+[resource]
+script = ExtResource("1_f8ft8")
+fish_name = "Bubble Fin"
+rarity = 1
+sprite_texture = ExtResource("2_q12hd")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

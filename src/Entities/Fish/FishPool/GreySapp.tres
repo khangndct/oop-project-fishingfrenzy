@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://bphgtayejbx1g"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_c2sd3"]
+[ext_resource type="Texture2D" uid="uid://dbc42s1pqd0mq" path="res://Assets/Img/Fish/Common/GreySapp.png" id="2_1b8c3"]
+
+[resource]
+script = ExtResource("1_c2sd3")
+fish_name = "Grey Sapp"
+rarity = "common"
+sprite_texture = ExtResource("2_1b8c3")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

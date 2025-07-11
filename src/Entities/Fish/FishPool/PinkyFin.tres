@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://5gst1dmfo66g"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_lpsvs"]
+[ext_resource type="Texture2D" uid="uid://pshxsl0186tl" path="res://Assets/Img/Fish/Common/PinkyFin.png" id="2_itbm8"]
+
+[resource]
+script = ExtResource("1_lpsvs")
+fish_name = "Pinky Fin"
+rarity = 0
+sprite_texture = ExtResource("2_itbm8")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

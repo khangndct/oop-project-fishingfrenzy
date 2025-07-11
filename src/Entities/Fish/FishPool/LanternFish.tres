@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://chre7wkyg5c2g"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_0pgdv"]
+[ext_resource type="Texture2D" uid="uid://c10mnxhe4nfu8" path="res://Assets/Img/Fish/Epic/LanternFish.png" id="2_68qdc"]
+
+[resource]
+script = ExtResource("1_0pgdv")
+fish_name = "Lantern Fish"
+rarity = 3
+sprite_texture = ExtResource("2_68qdc")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

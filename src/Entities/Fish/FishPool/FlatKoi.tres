@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://cfiluff32bqp6"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_6awwf"]
+[ext_resource type="Texture2D" uid="uid://dihu4785rc2yt" path="res://Assets/Img/Fish/Common/FlatKoi.png" id="2_rk4jp"]
+
+[resource]
+script = ExtResource("1_6awwf")
+fish_name = "Flat Koi"
+rarity = "common"
+sprite_texture = ExtResource("2_rk4jp")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://ddk26unvh68ox"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_vwpke"]
+[ext_resource type="Texture2D" uid="uid://bxwm74ymfwkrm" path="res://Assets/Img/Fish/Legendary/DragonFish.png" id="2_33peq"]
+
+[resource]
+script = ExtResource("1_vwpke")
+fish_name = "Dragon Fish"
+rarity = 4
+sprite_texture = ExtResource("2_33peq")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

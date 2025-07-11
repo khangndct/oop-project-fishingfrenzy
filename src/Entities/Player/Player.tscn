@@ -1,16 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://dpwl0t5ca3ukn"]
+[gd_scene load_steps=4 format=3 uid="uid://bsbx0w48xrbo3"]
 
-[ext_resource type="Script" uid="uid://c8dlnl4rakyq8" path="res://Entities/Player/Player.gd" id="1_ww0jn"]
-[ext_resource type="Texture2D" uid="uid://bpxy40atea3e5" path="res://Entities/Player/img/Player.svg" id="2_vweq0"]
+[ext_resource type="Script" uid="uid://3qftv4b86o1x" path="res://Entities/Player/Player.gd" id="1_ww0jn"]
+[ext_resource type="Texture2D" uid="uid://c5fsxnqkmrq4e" path="res://Assets/Img/Player/Player.svg" id="2_vweq0"]
+[ext_resource type="PackedScene" uid="uid://o2ucne7lhu8g" path="res://Entities/Rod/Rod.tscn" id="3_1des2"]
 
 [node name="Player" type="Node2D"]
+scale = Vector2(1.2195, 1.2195)
 script = ExtResource("1_ww0jn")
-speed = 5
-metadata/_custom_type_script = "uid://c8dlnl4rakyq8"
+metadata/_custom_type_script = "uid://3qftv4b86o1x"
 
-[node name="Art" type="Sprite2D" parent="."]
-scale = Vector2(1.54167, 1.54167)
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_vweq0")
 
-[node name="HoldingPoint" type="Marker2D" parent="."]
-position = Vector2(34, -1)
+[node name="Rod" parent="." instance=ExtResource("3_1des2")]
+position = Vector2(30, -6)
+scale = Vector2(1.06973, 1.06973)
+
+[node name="LeftPoint" type="Marker2D" parent="."]
+position = Vector2(-67.2407, 17.2202)
+
+[node name="RightPoint" type="Marker2D" parent="."]
+position = Vector2(71.3407, 7.38007)

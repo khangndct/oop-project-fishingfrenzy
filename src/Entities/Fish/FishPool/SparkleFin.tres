@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://ctid7ddopfxg4"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_bu1d4"]
+[ext_resource type="Texture2D" uid="uid://cvqvtfre8v6af" path="res://Assets/Img/Fish/Epic/SparkleFin.png" id="2_vdjap"]
+
+[resource]
+script = ExtResource("1_bu1d4")
+fish_name = "Sparkle Fin"
+rarity = 3
+sprite_texture = ExtResource("2_vdjap")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

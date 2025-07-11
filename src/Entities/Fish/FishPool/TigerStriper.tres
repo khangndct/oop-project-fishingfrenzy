@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://fmuiferv2ll4"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_gjkr3"]
+[ext_resource type="Texture2D" uid="uid://cbxkqjedlaa2t" path="res://Assets/Img/Fish/Uncommon/TigerStriper.png" id="2_5lnn5"]
+
+[resource]
+script = ExtResource("1_gjkr3")
+fish_name = "Tiger Striper"
+rarity = 1
+sprite_texture = ExtResource("2_5lnn5")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

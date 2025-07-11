@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://cecx180dwxgog"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_364bm"]
+[ext_resource type="Texture2D" uid="uid://dhip75c14phu3" path="res://Assets/Img/Fish/Common/LillGreen.png" id="2_olsat"]
+
+[resource]
+script = ExtResource("1_364bm")
+fish_name = "Lill Green"
+rarity = "common"
+sprite_texture = ExtResource("2_olsat")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

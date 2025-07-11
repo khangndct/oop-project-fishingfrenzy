@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://dd78o8sl7151q"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_m6tui"]
+[ext_resource type="Texture2D" uid="uid://bbv5ni1ykwj1f" path="res://Assets/Img/Fish/Epic/CrystalSalmon.png" id="2_hn7d2"]
+
+[resource]
+script = ExtResource("1_m6tui")
+fish_name = "Crystal Salmon"
+rarity = 3
+sprite_texture = ExtResource("2_hn7d2")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

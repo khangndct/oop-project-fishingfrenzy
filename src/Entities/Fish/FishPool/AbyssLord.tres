@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://rh0ac0mbirja"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_af3kg"]
+[ext_resource type="Texture2D" uid="uid://blgdmrbay5u5o" path="res://Assets/Img/Fish/Legendary/AbyssLord.png" id="2_2mw6l"]
+
+[resource]
+script = ExtResource("1_af3kg")
+fish_name = "Abyss Lord"
+rarity = 4
+sprite_texture = ExtResource("2_2mw6l")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

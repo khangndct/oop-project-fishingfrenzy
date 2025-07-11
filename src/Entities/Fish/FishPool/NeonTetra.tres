@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://ccqaop7wvkd3d"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_yxgym"]
+[ext_resource type="Texture2D" uid="uid://0oj2q7fvv537" path="res://Assets/Img/Fish/Common/NeonTetra.png" id="2_8er8p"]
+
+[resource]
+script = ExtResource("1_yxgym")
+fish_name = "Neon Tetra"
+rarity = 0
+sprite_texture = ExtResource("2_8er8p")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

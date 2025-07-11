@@ -1,7 +1,7 @@
 extends Node2D
 
 func _ready():
-	print("hello")
+	pass
 
 
 func _on_play_button_pressed() -> void:

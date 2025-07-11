@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://dkptq4baqywq5"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_uuvca"]
+[ext_resource type="Texture2D" uid="uid://x3fsqmdbkfsg" path="res://Assets/Img/Fish/Common/EarthTetra.png" id="2_ja3lp"]
+
+[resource]
+script = ExtResource("1_uuvca")
+fish_name = "Earth Tetra"
+rarity = "common"
+sprite_texture = ExtResource("2_ja3lp")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

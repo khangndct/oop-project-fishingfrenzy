@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://dlfbnd5m53nn7"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_2lcwy"]
+[ext_resource type="Texture2D" uid="uid://bjfv81787drmu" path="res://Assets/Img/Fish/Rare/PhantomRay.png" id="2_ha23o"]
+
+[resource]
+script = ExtResource("1_2lcwy")
+fish_name = "Phantom Ray"
+rarity = 2
+sprite_texture = ExtResource("2_ha23o")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

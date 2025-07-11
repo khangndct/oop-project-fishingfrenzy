@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://r6a3crfufmrl"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_uj3ug"]
+[ext_resource type="Texture2D" uid="uid://cqpyw3whyp6c5" path="res://Assets/Img/Fish/Common/PebbleCarp.png" id="2_7fnnp"]
+
+[resource]
+script = ExtResource("1_uj3ug")
+fish_name = "Pebble Carp"
+rarity = 0
+sprite_texture = ExtResource("2_7fnnp")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

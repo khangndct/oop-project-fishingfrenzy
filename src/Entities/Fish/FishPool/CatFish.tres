@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://dc2oyhpwr4sqw"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_ktqvo"]
+[ext_resource type="Texture2D" uid="uid://do1js6ah6vqgm" path="res://Assets/Img/Fish/Epic/CatFish.png" id="2_mu3go"]
+
+[resource]
+script = ExtResource("1_ktqvo")
+fish_name = "Cat Fish"
+rarity = 3
+sprite_texture = ExtResource("2_mu3go")
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

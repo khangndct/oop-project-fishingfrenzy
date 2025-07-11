@@ -1,0 +1,48 @@
+[gd_scene load_steps=32 format=3 uid="uid://cdric1esr5pm4"]
+
+[ext_resource type="Script" uid="uid://b8y3mpos474nt" path="res://Common/Utils/FishFactory.gd" id="1_exh56"]
+[ext_resource type="PackedScene" uid="uid://ca62q5t15kxic" path="res://Entities/Fish/Fish.tscn" id="2_fcuqh"]
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="3_lx87o"]
+[ext_resource type="Resource" uid="uid://rh0ac0mbirja" path="res://Entities/Fish/FishPool/AbyssLord.tres" id="4_r7cds"]
+[ext_resource type="Resource" uid="uid://di0yo1ovhcrkj" path="res://Entities/Fish/FishPool/BasicKoi.tres" id="5_um8ik"]
+[ext_resource type="Resource" uid="uid://81lcsq5mrjjn" path="res://Entities/Fish/FishPool/BubbleFin.tres" id="6_l7lov"]
+[ext_resource type="Resource" uid="uid://dc2oyhpwr4sqw" path="res://Entities/Fish/FishPool/CatFish.tres" id="7_413ok"]
+[ext_resource type="Resource" uid="uid://2vdy6etoboqk" path="res://Entities/Fish/FishPool/CelestialKoi.tres" id="8_vxrpm"]
+[ext_resource type="Resource" uid="uid://dd78o8sl7151q" path="res://Entities/Fish/FishPool/CrystalSalmon.tres" id="9_psdss"]
+[ext_resource type="Resource" uid="uid://ddk26unvh68ox" path="res://Entities/Fish/FishPool/DragonFish.tres" id="10_3snip"]
+[ext_resource type="Resource" uid="uid://dkptq4baqywq5" path="res://Entities/Fish/FishPool/EarthTetra.tres" id="11_q12py"]
+[ext_resource type="Resource" uid="uid://cfiluff32bqp6" path="res://Entities/Fish/FishPool/FlatKoi.tres" id="12_odqvy"]
+[ext_resource type="Resource" uid="uid://dd7821qfbnkwf" path="res://Entities/Fish/FishPool/FlatMinnow.tres" id="13_h3hgb"]
+[ext_resource type="Resource" uid="uid://b28m6n16m40mk" path="res://Entities/Fish/FishPool/GoargeGobbler.tres" id="14_l3ypx"]
+[ext_resource type="Resource" uid="uid://bngv0w8h68cvr" path="res://Entities/Fish/FishPool/GoldfinTrout.tres" id="15_crpau"]
+[ext_resource type="Resource" uid="uid://bphgtayejbx1g" path="res://Entities/Fish/FishPool/GreySapp.tres" id="16_xyhr5"]
+[ext_resource type="Resource" uid="uid://dpfuv25onrrx" path="res://Entities/Fish/FishPool/JellyPuffer.tres" id="17_yg3j2"]
+[ext_resource type="Resource" uid="uid://chre7wkyg5c2g" path="res://Entities/Fish/FishPool/LanternFish.tres" id="18_aqpbf"]
+[ext_resource type="Resource" uid="uid://4r0ckrfdnd0f" path="res://Entities/Fish/FishPool/LavaCarp.tres" id="19_w6j11"]
+[ext_resource type="Resource" uid="uid://cjhdvtwdgkbd2" path="res://Entities/Fish/FishPool/LeviathanFry.tres" id="20_b60wl"]
+[ext_resource type="Resource" uid="uid://cecx180dwxgog" path="res://Entities/Fish/FishPool/LillGreen.tres" id="21_4jj7u"]
+[ext_resource type="Resource" uid="uid://ccqaop7wvkd3d" path="res://Entities/Fish/FishPool/NeonTetra.tres" id="22_3e7ii"]
+[ext_resource type="Resource" uid="uid://r6a3crfufmrl" path="res://Entities/Fish/FishPool/PebbleCarp.tres" id="23_kvkil"]
+[ext_resource type="Resource" uid="uid://dlfbnd5m53nn7" path="res://Entities/Fish/FishPool/PhantomRay.tres" id="24_q1ssr"]
+[ext_resource type="Resource" uid="uid://5gst1dmfo66g" path="res://Entities/Fish/FishPool/PinkyFin.tres" id="25_xt6b8"]
+[ext_resource type="Resource" uid="uid://s6a1f3m1ck68" path="res://Entities/Fish/FishPool/RainbowSapper.tres" id="26_yyonp"]
+[ext_resource type="Resource" uid="uid://snquefnr62l8" path="res://Entities/Fish/FishPool/SirenFish.tres" id="27_xixvj"]
+[ext_resource type="Resource" uid="uid://ctid7ddopfxg4" path="res://Entities/Fish/FishPool/SparkleFin.tres" id="28_krcme"]
+[ext_resource type="Resource" uid="uid://cfewx41fsvkos" path="res://Entities/Fish/FishPool/SunFish.tres" id="29_d43xh"]
+[ext_resource type="Resource" uid="uid://ds4xcn8b6b5xk" path="res://Entities/Fish/FishPool/Thunder.tres" id="30_2nwqq"]
+[ext_resource type="Resource" uid="uid://fmuiferv2ll4" path="res://Entities/Fish/FishPool/TigerStriper.tres" id="31_fdd1x"]
+
+[node name="FishFactory" type="Node2D"]
+script = ExtResource("1_exh56")
+fish_scene = ExtResource("2_fcuqh")
+fish_data_list = Array[ExtResource("3_lx87o")]([ExtResource("4_r7cds"), ExtResource("5_um8ik"), ExtResource("6_l7lov"), ExtResource("7_413ok"), ExtResource("8_vxrpm"), ExtResource("9_psdss"), ExtResource("10_3snip"), ExtResource("11_q12py"), ExtResource("12_odqvy"), ExtResource("13_h3hgb"), ExtResource("14_l3ypx"), ExtResource("15_crpau"), ExtResource("16_xyhr5"), ExtResource("17_yg3j2"), ExtResource("18_aqpbf"), ExtResource("19_w6j11"), ExtResource("20_b60wl"), ExtResource("21_4jj7u"), ExtResource("22_3e7ii"), ExtResource("23_kvkil"), ExtResource("24_q1ssr"), ExtResource("25_xt6b8"), ExtResource("26_yyonp"), ExtResource("27_xixvj"), ExtResource("28_krcme"), ExtResource("29_d43xh"), ExtResource("30_2nwqq"), ExtResource("31_fdd1x")])
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="MinPoint" type="Marker2D" parent="."]
+position = Vector2(40, 313)
+
+[node name="MaxPoint" type="Marker2D" parent="."]
+position = Vector2(49, 695)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

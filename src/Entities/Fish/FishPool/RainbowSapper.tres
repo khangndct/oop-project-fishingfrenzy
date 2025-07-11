@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=2 format=3 uid="uid://s6a1f3m1ck68"]
+
+[ext_resource type="Script" uid="uid://dqnyvdlp2w4gd" path="res://Entities/Fish/FishData.gd" id="1_m6ld8"]
+
+[resource]
+script = ExtResource("1_m6ld8")
+fish_name = "Rainbow Snapper"
+rarity = 1
+metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"
