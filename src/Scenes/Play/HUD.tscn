@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://2p5klf8messb"]
+
+[ext_resource type="Script" uid="uid://xldj8vde1txf" path="res://Scenes/Play/HUD.gd" id="1_hud_script"]
+[ext_resource type="FontFile" uid="uid://65rfcb3imfa2" path="res://Assets/Font/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf" id="2_pixel_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.2, 0.2, 0.2, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0.2, 0.8, 0.2, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1, 0.5, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.4, 0.4, 0.8)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud_script")
+
+[node name="EnergyBar" type="ProgressBar" parent="."]
+modulate = Color(0.8, 0.9, 1, 1)
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 300.0
+offset_bottom = 62.0
+theme_override_styles/background = SubResource("StyleBoxFlat_1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2")
+value = 100.0
+show_percentage = false
+
+[node name="MoneyLabel" type="Label" parent="."]
+offset_left = 30.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_pixel_font")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_3")
+text = "Money: $0"
+vertical_alignment = 1

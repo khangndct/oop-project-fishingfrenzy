@@ -48,6 +48,10 @@ func _physics_process(delta):
 				$Line.points[0].y -= power
 			if abs($Line.points[1].y - $Line.points[0].y) <= 90:
 				GlobalVariable.money += fish_ref.fish_data.get_stat("value")
+				# Reduce player energy when fish is caught
+				var player = get_parent()  # Rod is child of Player
+				if player and player is Player:
+					player.reduce_energy_for_fish()
 				if is_instance_valid(fish_ref):
 					fish_ref.queue_free()
 				fish_ref = null

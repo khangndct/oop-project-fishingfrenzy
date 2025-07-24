@@ -1,8 +1,2 @@
-res://Scenes/Play/Play.tscn
-res://Entities/Player/Player.gd
-res://Entities/Rod/Rod.tscn
-res://Common/Utils/FishFactory.tscn
 res://Scenes/Main/Main.tscn
-res://Entities/Fish/Fish.tscn
-res://Entities/Player/Player.tscn
-res://Entities/Rod/Rod.gd
+res://Scenes/Play/HUD.tscn

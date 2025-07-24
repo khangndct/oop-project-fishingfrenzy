@@ -2,19 +2,36 @@ class_name Player
 
 extends Node2D
 
+signal energy_changed(new_energy)
 
 enum State { IDLE, MOVE_LEFT, MOVE_RIGHT, AT_LEFTBOUND, AT_RIGHTBOUND }
 
-
 @export var speed : int = 10
+@export var max_energy : int = 100
+@export var energy_cost_per_fish : int = 2
+
 var player_state : int = State.IDLE
+var energy : int = 100 : set = set_energy
 
 
 func _ready():
-	pass
+	energy = max_energy  # Initialize energy to max
 
-func _physics_process(delta):
+func set_energy(new_energy: int):
+	energy = clamp(new_energy, 0, max_energy)
+	energy_changed.emit(energy)
+
+func reduce_energy_for_fish():
+	energy -= energy_cost_per_fish
+	if energy <= 0:
+		print("Player is exhausted!")
+
+func restore_energy(amount: int):
+	energy += amount
+
+func _physics_process(_delta):
 	var screen_size = get_viewport_rect().size
+	
 	match player_state:
 		State.IDLE:
 			if Input.is_action_pressed("arrowRight"):
