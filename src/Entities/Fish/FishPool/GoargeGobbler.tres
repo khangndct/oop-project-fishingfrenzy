@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_k6e7h")
 fish_name = "Goarge Gobbler"
-rarity = "common"
+rarity = 0
 sprite_texture = ExtResource("2_rxlkv")
 metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

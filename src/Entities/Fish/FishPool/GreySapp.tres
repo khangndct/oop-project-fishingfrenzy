@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_c2sd3")
 fish_name = "Grey Sapp"
-rarity = "common"
+rarity = 0
 sprite_texture = ExtResource("2_1b8c3")
 metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"

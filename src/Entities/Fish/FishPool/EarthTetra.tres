@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_uuvca")
 fish_name = "Earth Tetra"
-rarity = "common"
+rarity = 0
 sprite_texture = ExtResource("2_ja3lp")
 metadata/_custom_type_script = "uid://dqnyvdlp2w4gd"
