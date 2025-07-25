@@ -3,6 +3,7 @@ extends Node2D
 @onready var hud = $HUD
 
 func _ready():
+<<<<<<< HEAD
 	# Show active potions at start of fishing session
 	_show_active_potions()
 	
@@ -86,6 +87,9 @@ func _reset_potions():
 	if GlobalVariable.has_speed_potion:
 		GlobalVariable.has_speed_potion = false
 		print("Legacy Speed Potion consumed - purchase again in shop if needed")
+=======
+	pass
+>>>>>>> main
 
 func _process(delta):
 	pass

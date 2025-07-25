@@ -1,4 +1,5 @@
 res://Scenes/Main/Main.tscn
+<<<<<<< HEAD
 res://Common/Utils/SaveManager.gd
 res://Scenes/Play/Play.gd
 res://Scenes/Shop/Shop.gd
@@ -43,3 +44,12 @@ res://Entities/Fish/FishPool/SunFish.tres
 res://Entities/Fish/FishPool/Thunder.tres
 res://Entities/Fish/FishPool/TigerStriper.tres
 res://Common/Utils/FishFactory.tscn
+=======
+res://Common/Utils/FishFactory.gd
+res://Entities/Fish/FishData.gd
+res://Common/GlobalVariable.gd
+res://Entities/Fish/Fish.gd
+res://Entities/Player/Player.gd
+res://Entities/Rod/Rod.gd
+res://Scenes/Play/Play.gd
+>>>>>>> main

@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cdric1esr5pm4" path="res://Common/Utils/FishFactory.tscn" id="4_2ugot"]
 [ext_resource type="PackedScene" uid="uid://2p5klf8messb" path="res://Scenes/Play/HUD.tscn" id="5_hud"]
 
+[ext_resource type="PackedScene" uid="uid://2p5klf8messb" path="res://Scenes/Play/HUD.tscn" id="5_hud"]
+
 [node name="Play" type="Node2D"]
 script = ExtResource("1_2ugot")
 
