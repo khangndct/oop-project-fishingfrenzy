@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://u443nlh4cj0v"]
+[gd_scene load_steps=5 format=3 uid="uid://u443nlh4cj0v"]
 
 [ext_resource type="Script" uid="uid://c637a06r8f72u" path="res://Scenes/Main/Main.gd" id="1_cmk6n"]
 [ext_resource type="Texture2D" uid="uid://cpl3h6fn4ay0h" path="res://Scenes/Main/img/background.png" id="1_qtv3y"]
 [ext_resource type="Texture2D" uid="uid://b1lk3uykck71w" path="res://Scenes/Main/img/gametitle.svg" id="2_cmk6n"]
+[ext_resource type="FontFile" uid="uid://65rfcb3imfa2" path="res://Assets/Font/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf" id="4_font"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_cmk6n")
@@ -18,28 +19,167 @@ scale = Vector2(0.694792, 0.694792)
 texture = ExtResource("2_cmk6n")
 
 [node name="PlayButton" type="Button" parent="."]
-offset_left = 632.0
-offset_top = 313.0
-offset_right = 673.0
-offset_bottom = 344.0
-text = "Play
-"
+offset_left = 580.0
+offset_top = 300.0
+offset_right = 700.0
+offset_bottom = 340.0
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 18
+text = "Play"
 
 [node name="ShopButton" type="Button" parent="."]
-offset_left = 629.0
+offset_left = 580.0
 offset_top = 350.0
-offset_right = 676.0
-offset_bottom = 381.0
-text = "Shop
-"
+offset_right = 700.0
+offset_bottom = 390.0
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 18
+text = "Shop"
+
+[node name="ClearDataButton" type="Button" parent="."]
+offset_left = 580.0
+offset_top = 400.0
+offset_right = 700.0
+offset_bottom = 440.0
+theme_override_colors/font_color = Color(1, 0.5, 0.5, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "Clear Data"
 
 [node name="QuitButton" type="Button" parent="."]
-offset_left = 632.0
-offset_top = 387.0
-offset_right = 674.0
-offset_bottom = 418.0
-text = "Quit
-"
+offset_left = 580.0
+offset_top = 450.0
+offset_right = 700.0
+offset_bottom = 490.0
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 18
+text = "Quit"
+
+[node name="ClearDataConfirmDialog" type="AcceptDialog" parent="."]
+title = "Clear All Data"
+initial_position = 2
+size = Vector2i(550, 350)
+dialog_autowrap = true
+
+[node name="Background" type="ColorRect" parent="ClearDataConfirmDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 0.9)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ClearDataConfirmDialog/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="ClearDataConfirmDialog/Background/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 24
+text = "! Warning !"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="ClearDataConfirmDialog/Background/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "Are you sure you want to clear ALL game data?
+
+This will permanently delete:
+• All your money
+• All purchased potions
+• Save file
+
+This action cannot be undone!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ClearDataConfirmDialog/Background/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="ClearDataConfirmDialog/Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "Yes, Clear All!"
+
+[node name="CancelButton" type="Button" parent="ClearDataConfirmDialog/Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "Cancel!"
+
+[node name="SuccessDialog" type="Window" parent="."]
+title = "Data Cleared"
+initial_position = 2
+size = Vector2i(450, 220)
+transient = true
+exclusive = true
+
+[node name="Background" type="ColorRect" parent="SuccessDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 0.9)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SuccessDialog/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 50.0
+offset_right = -22.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="SuccessLabel" type="Label" parent="SuccessDialog/Background/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 1, 0.2, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 18
+text = "All data has been
+deleted successfully!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="CenterContainer" type="CenterContainer" parent="SuccessDialog/Background/VBoxContainer"]
+layout_mode = 2
+
+[node name="OkButton" type="Button" parent="SuccessDialog/Background/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "OK"
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="ShopButton" to="." method="_on_shop_button_pressed"]
+[connection signal="pressed" from="ClearDataButton" to="." method="_on_clear_data_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="ClearDataConfirmDialog/Background/VBoxContainer/HBoxContainer/ConfirmButton" to="." method="_on_confirm_clear_data"]
+[connection signal="pressed" from="ClearDataConfirmDialog/Background/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_clear_data"]
+[connection signal="pressed" from="SuccessDialog/Background/VBoxContainer/CenterContainer/OkButton" to="." method="_on_success_ok"]

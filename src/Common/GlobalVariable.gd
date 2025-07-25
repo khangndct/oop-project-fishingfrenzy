@@ -6,6 +6,25 @@ var rod_ref : Rod = null
 var player_ref : Player = null
 var money : int = 0
 
+# Potion effects - Fish Slow Potions
+var has_fish_slow_potion_30: bool = false
+var has_fish_slow_potion_50: bool = false  
+var has_fish_slow_potion_70: bool = false
+
+# Potion effects - Player Speed Potions
+var has_player_speed_potion_20: bool = false
+var has_player_speed_potion_30: bool = false
+var has_player_speed_potion_40: bool = false
+
+# Potion effects - Rod Buff Potions
+var has_rod_buff_potion_30: bool = false
+var has_rod_buff_potion_50: bool = false
+var has_rod_buff_potion_70: bool = false
+
+# Legacy variables (for backward compatibility)
+var has_slow_potion: bool = false
+var has_speed_potion: bool = false
+
 # UI elements for caught fish display
 var caught_fish_ui : Control = null
 var caught_fish_label : Label = null
@@ -92,3 +111,50 @@ func _get_rarity_color(rarity: FishData.Rarity) -> Color:
 			return Color.GOLD
 		_:
 			return Color.WHITE
+
+# Helper functions for potion effects
+func get_fish_slow_effect() -> float:
+	"""Return the highest fish slow effect (as decimal, e.g., 0.3 for 30%)"""
+	if has_fish_slow_potion_70:
+		return 0.70
+	elif has_fish_slow_potion_50:
+		return 0.50
+	elif has_fish_slow_potion_30:
+		return 0.30
+	elif has_slow_potion:  # Legacy support
+		return 0.90
+	return 0.0
+
+func get_player_speed_effect() -> float:
+	"""Return the highest player speed effect (as decimal, e.g., 0.2 for 20%)"""
+	if has_player_speed_potion_40:
+		return 0.40
+	elif has_player_speed_potion_30:
+		return 0.30
+	elif has_player_speed_potion_20:
+		return 0.20
+	elif has_speed_potion:  # Legacy support
+		return 0.20
+	return 0.0
+
+func get_rod_buff_effect() -> float:
+	"""Return the highest rod buff effect (as decimal, e.g., 0.3 for 30%)"""
+	if has_rod_buff_potion_70:
+		return 0.70
+	elif has_rod_buff_potion_50:
+		return 0.50
+	elif has_rod_buff_potion_30:
+		return 0.30
+	return 0.0
+
+func has_any_fish_slow_potion() -> bool:
+	"""Check if any fish slow potion is active"""
+	return has_fish_slow_potion_30 or has_fish_slow_potion_50 or has_fish_slow_potion_70 or has_slow_potion
+
+func has_any_player_speed_potion() -> bool:
+	"""Check if any player speed potion is active"""
+	return has_player_speed_potion_20 or has_player_speed_potion_30 or has_player_speed_potion_40 or has_speed_potion
+
+func has_any_rod_buff_potion() -> bool:
+	"""Check if any rod buff potion is active"""
+	return has_rod_buff_potion_30 or has_rod_buff_potion_50 or has_rod_buff_potion_70

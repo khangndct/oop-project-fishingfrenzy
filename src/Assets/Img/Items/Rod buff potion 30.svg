@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bottle body -->
+  <rect x="45" y="60" width="60" height="80" rx="10" ry="10" fill="#8FBC8F" stroke="#228B22" stroke-width="3"/>
+  
+  <!-- Bottle neck -->
+  <rect x="60" y="40" width="30" height="25" fill="#8FBC8F" stroke="#228B22" stroke-width="3"/>
+  
+  <!-- Cork/Cap -->
+  <rect x="55" y="30" width="40" height="15" rx="5" ry="5" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+  
+  <!-- Liquid inside -->
+  <rect x="50" y="65" width="50" height="70" rx="5" ry="5" fill="#32CD32" opacity="0.8"/>
+  
+  <!-- Label -->
+  <rect x="50" y="85" width="50" height="30" fill="#FFFFFF" opacity="0.9" rx="3" ry="3"/>
+  <text x="75" y="94" text-anchor="middle" font-family="Arial" font-size="7" fill="#000">ROD</text>
+  <text x="75" y="103" text-anchor="middle" font-family="Arial" font-size="7" fill="#000">BUFF</text>
+  <text x="75" y="112" text-anchor="middle" font-family="Arial" font-size="6" fill="#228B22">30%</text>
+  
+  <!-- Fishing rod bubbles -->
+  <circle cx="60" cy="75" r="3" fill="#90EE90" opacity="0.8"/>
+  <circle cx="85" cy="85" r="2" fill="#90EE90" opacity="0.8"/>
+  <circle cx="70" cy="95" r="2.5" fill="#90EE90" opacity="0.8"/>
+  <circle cx="65" cy="125" r="2" fill="#90EE90" opacity="0.8"/>
+  
+  <!-- Fishing rod symbols -->
+  <path d="M 25 60 L 25 80 M 25 60 L 35 65" stroke="#8B4513" stroke-width="2" fill="none"/>
+  <circle cx="35" cy="70" r="1" fill="#4169E1"/>
+  <path d="M 115 70 L 115 90 M 115 70 L 125 75" stroke="#8B4513" stroke-width="2" fill="none"/>
+  <circle cx="125" cy="80" r="1" fill="#4169E1"/>
+  
+  <!-- Power enhancement sparkles -->
+  <text x="35" y="45" font-family="Arial" font-size="12" fill="#32CD32">🎣</text>
+  <text x="105" y="55" font-family="Arial" font-size="10" fill="#32CD32">🎣</text>
+  <text x="25" y="105" font-family="Arial" font-size="8" fill="#32CD32">⚡</text>
+  <text x="115" y="115" font-family="Arial" font-size="8" fill="#32CD32">⚡</text>
+  
+  <!-- Strength indicator -->
+  <text x="75" y="25" text-anchor="middle" font-family="Arial" font-size="10" fill="#228B22" font-weight="bold">💪</text>
+</svg>

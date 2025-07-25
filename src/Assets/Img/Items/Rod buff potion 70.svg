@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+  <!-- Epic rod mastery effects -->
+  <defs>
+    <radialGradient id="epicRodGlow" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5"/>
+      <stop offset="50%" style="stop-color:#32CD32;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#228B22;stop-opacity:0"/>
+    </radialGradient>
+    <linearGradient id="epicRodLiquid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1"/>
+      <stop offset="30%" style="stop-color:#32CD32;stop-opacity:0.9"/>
+      <stop offset="70%" style="stop-color:#228B22;stop-opacity:0.9"/>
+      <stop offset="100%" style="stop-color:#006400;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="masterBottle" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#F0FFF0;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#32CD32;stop-opacity:1"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Multiple mastery auras -->
+  <ellipse cx="75" cy="90" rx="80" ry="75" fill="url(#epicRodGlow)"/>
+  <ellipse cx="75" cy="90" rx="65" ry="60" fill="#FFD700" opacity="0.1"/>
+  <ellipse cx="75" cy="90" rx="50" ry="45" fill="#32CD32" opacity="0.1"/>
+  
+  <!-- Epic bottle body -->
+  <rect x="45" y="60" width="60" height="80" rx="12" ry="12" fill="url(#masterBottle)" stroke="#FFD700" stroke-width="5"/>
+  
+  <!-- Master neck -->
+  <rect x="60" y="40" width="30" height="25" fill="url(#masterBottle)" stroke="#FFD700" stroke-width="5"/>
+  
+  <!-- Legendary cork with master rod -->
+  <rect x="55" y="30" width="40" height="15" rx="7" ry="7" fill="#FFD700" stroke="#32CD32" stroke-width="3"/>
+  <rect x="60" y="32" width="30" height="5" fill="#FFFFFF" opacity="0.8"/>
+  <text x="75" y="42" text-anchor="middle" font-family="Arial" font-size="10" fill="#228B22">🎣</text>
+  
+  <!-- Epic liquid with mastery gradient -->
+  <rect x="50" y="65" width="50" height="70" rx="7" ry="7" fill="url(#epicRodLiquid)"/>
+  
+  <!-- Master label -->
+  <rect x="48" y="83" width="54" height="34" fill="#FFFFFF" stroke="#FFD700" stroke-width="2" opacity="0.98" rx="5" ry="5"/>
+  <rect x="50" y="85" width="50" height="30" fill="none" stroke="#32CD32" stroke-width="1" rx="3" ry="3"/>
+  <text x="75" y="93" text-anchor="middle" font-family="Arial" font-size="7" font-weight="bold" fill="#006400">EPIC</text>
+  <text x="75" y="102" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#006400">ROD</text>
+  <text x="75" y="111" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#006400">BUFF</text>
+  <text x="75" y="117" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#32CD32">70%</text>
+  
+  <!-- Master power bubbles -->
+  <circle cx="60" cy="75" r="5" fill="#FFD700" opacity="0.9" stroke="#32CD32" stroke-width="2"/>
+  <circle cx="85" cy="85" r="4" fill="#32CD32" opacity="0.9" stroke="#228B22" stroke-width="2"/>
+  <circle cx="70" cy="95" r="4.5" fill="#228B22" opacity="0.9" stroke="#FFD700" stroke-width="2"/>
+  <circle cx="55" cy="110" r="3" fill="#90EE90" opacity="0.8" stroke="#32CD32" stroke-width="1"/>
+  <circle cx="90" cy="105" r="3.5" fill="#ADFF2F" opacity="0.8" stroke="#FFD700" stroke-width="1"/>
+  <circle cx="75" cy="125" r="2" fill="#FFD700" opacity="0.7" stroke="#228B22" stroke-width="1"/>
+  
+  <!-- Epic fishing rods with power -->
+  <path d="M 15 50 L 15 80 M 15 50 L 35 65" stroke="#8B4513" stroke-width="4" fill="none"/>
+  <circle cx="35" cy="70" r="3" fill="#4169E1" stroke="#FFD700" stroke-width="2"/>
+  <path d="M 115 60 L 115 90 M 115 60 L 135 75" stroke="#8B4513" stroke-width="4" fill="none"/>
+  <circle cx="135" cy="80" r="3" fill="#4169E1" stroke="#FFD700" stroke-width="2"/>
+  
+  <!-- Master power streams -->
+  <path d="M 10 85 L 40 85 L 35 80 M 40 85 L 35 90" stroke="#FFD700" stroke-width="3" fill="none"/>
+  <path d="M 110 95 L 140 95 L 135 90 M 140 95 L 135 100" stroke="#FFD700" stroke-width="3" fill="none"/>
+  <path d="M 20 115 L 45 115 L 40 110 M 45 115 L 40 120" stroke="#32CD32" stroke-width="3" fill="none"/>
+  <path d="M 105 120 L 130 120 L 125 115 M 130 120 L 125 125" stroke="#32CD32" stroke-width="3" fill="none"/>
+  
+  <!-- Epic fishing and power symbols -->
+  <text x="25" y="35" font-family="Arial" font-size="16" fill="#FFD700">🎣</text>
+  <text x="115" y="45" font-family="Arial" font-size="14" fill="#32CD32">🎣</text>
+  <text x="15" y="70" font-family="Arial" font-size="12" fill="#228B22">⚡</text>
+  <text x="125" y="80" font-family="Arial" font-size="12" fill="#FFD700">⚡</text>
+  <text x="20" y="105" font-family="Arial" font-size="10" fill="#32CD32">💪</text>
+  <text x="120" y="110" font-family="Arial" font-size="10" fill="#228B22">💪</text>
+  <text x="30" y="135" font-family="Arial" font-size="8" fill="#90EE90">🎣</text>
+  <text x="110" y="130" font-family="Arial" font-size="8" fill="#ADFF2F">⚡</text>
+  
+  <!-- Master rings -->
+  <circle cx="75" cy="90" r="70" fill="none" stroke="#FFD700" stroke-width="2" opacity="0.6"/>
+  <circle cx="75" cy="90" r="60" fill="none" stroke="#32CD32" stroke-width="1" opacity="0.5"/>
+  <circle cx="75" cy="90" r="80" fill="none" stroke="#228B22" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Mastery runes -->
+  <text x="40" y="25" font-family="Arial" font-size="8" fill="#228B22">🎣</text>
+  <text x="100" y="30" font-family="Arial" font-size="8" fill="#FFD700">🎣</text>
+  <text x="15" y="45" font-family="Arial" font-size="8" fill="#32CD32">💪</text>
+  <text x="130" y="55" font-family="Arial" font-size="8" fill="#228B22">💪</text>
+  
+  <!-- Epic strength indicators -->
+  <text x="75" y="15" text-anchor="middle" font-family="Arial" font-size="14" fill="#228B22" font-weight="bold">💪</text>
+  <text x="65" y="15" text-anchor="middle" font-family="Arial" font-size="10" fill="#FFD700">🎣</text>
+  <text x="85" y="15" text-anchor="middle" font-family="Arial" font-size="10" fill="#32CD32">⚡</text>
+</svg>

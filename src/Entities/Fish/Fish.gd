@@ -187,7 +187,13 @@ func _physics_process(delta):
 		State.MOVE:
 			# Apply movement pattern
 			_apply_movement_pattern(delta)
-			position += velocity
+			
+			# Apply slow potion effect
+			var current_velocity = velocity
+			if GlobalVariable.has_slow_potion:
+				current_velocity = velocity * 0.1  # 90% speed reduction (10% of original speed)
+			
+			position += current_velocity
 			# Check if fish should use special ability
 			_check_special_ability_usage()
 		State.CATCHED:

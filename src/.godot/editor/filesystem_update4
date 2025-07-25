@@ -1,8 +1,13 @@
 res://Scenes/Main/Main.tscn
-res://Common/Utils/FishFactory.gd
-res://Entities/Fish/FishData.gd
-res://Common/GlobalVariable.gd
 res://Entities/Fish/Fish.gd
 res://Entities/Player/Player.gd
-res://Entities/Rod/Rod.gd
+res://Scenes/Play/HUD.gd
 res://Scenes/Play/Play.gd
+res://Common/GlobalVariable.gd
+res://Common/Utils/FishFactory.gd
+res://Common/Utils/SaveManager.gd
+res://Entities/Fish/Fish.tscn
+res://Entities/Fish/FishData.gd
+res://Entities/Rod/Rod.gd
+res://Scenes/Main/Main.gd
+res://Scenes/Shop/Shop.gd

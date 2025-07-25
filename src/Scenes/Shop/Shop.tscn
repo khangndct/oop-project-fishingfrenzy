@@ -1,0 +1,237 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5a3rhqiavrp5"]
+
+[ext_resource type="Texture2D" uid="uid://n2fvu82gnf8i" path="res://Scenes/Shop/img/background.png" id="1_4kyni"]
+[ext_resource type="Script" uid="uid://bu8je1hnpq5r1" path="res://Scenes/Shop/Shop.gd" id="1_shop_script"]
+[ext_resource type="FontFile" uid="uid://65rfcb3imfa2" path="res://Assets/Font/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf" id="3_font"]
+
+[node name="Shop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 4.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_shop_script")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(637, 360)
+scale = Vector2(0.833333, 0.703)
+texture = ExtResource("1_4kyni")
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 138.0
+offset_top = -700.0
+offset_right = 268.0
+offset_bottom = -640.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "← Back"
+
+[node name="ShopTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 30.0
+offset_right = 120.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 48
+text = "SHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -419.0
+offset_top = -251.0
+offset_right = 181.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -260.0
+offset_right = 500.0
+offset_bottom = 325.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemsPanel" type="Panel" parent="MainContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="ItemContainer" type="ScrollContainer" parent="MainContainer/ItemsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="MainContainer/ItemsPanel/ItemContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="ItemDetailPanel" type="Panel" parent="MainContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DetailContainer" type="VBoxContainer" parent="MainContainer/ItemDetailPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DetailTitle" type="Label" parent="MainContainer/ItemDetailPanel/DetailContainer"]
+layout_mode = 2
+text = "Item Details"
+horizontal_alignment = 1
+
+[node name="ItemImage" type="TextureRect" parent="MainContainer/ItemDetailPanel/DetailContainer"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemName" type="Label" parent="MainContainer/ItemDetailPanel/DetailContainer"]
+layout_mode = 2
+text = "Select an item to view details"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ItemDescription" type="Label" parent="MainContainer/ItemDetailPanel/DetailContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="PriceLabel" type="Label" parent="MainContainer/ItemDetailPanel/DetailContainer"]
+layout_mode = 2
+text = "Price: "
+
+[node name="StatusLabel" type="Label" parent="MainContainer/ItemDetailPanel/DetailContainer"]
+layout_mode = 2
+text = "Status: "
+
+[node name="PurchaseButton" type="Button" parent="MainContainer/ItemDetailPanel/DetailContainer"]
+layout_mode = 2
+disabled = true
+text = "Purchase"
+
+[node name="ConfirmationDialog" type="PopupPanel" parent="."]
+initial_position = 2
+size = Vector2i(500, 300)
+
+[node name="Background" type="Panel" parent="ConfirmationDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 496.0
+offset_bottom = 296.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmationDialog/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="ConfirmationDialog/Background/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 24
+text = "Confirmation"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="ConfirmationDialog/Background/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 16
+text = "Are you sure you want to purchase this item?"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmationDialog/Background/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="PurchaseNowButton" type="Button" parent="ConfirmationDialog/Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 16
+text = "Purchase Now"
+
+[node name="CancelButton" type="Button" parent="ConfirmationDialog/Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 16
+text = "Cancel"
+
+[node name="MoneyLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -480.0
+offset_top = 630.0
+offset_right = -240.0
+offset_bottom = 690.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 24
+text = "Your money: $0"
+horizontal_alignment = 2
+vertical_alignment = 1

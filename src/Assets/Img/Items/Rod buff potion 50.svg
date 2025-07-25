@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+  <!-- Enhanced rod effects -->
+  <defs>
+    <radialGradient id="rodGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#32CD32;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#32CD32;stop-opacity:0"/>
+    </radialGradient>
+    <linearGradient id="rodLiquid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#32CD32;stop-opacity:1"/>
+      <stop offset="50%" style="stop-color:#228B22;stop-opacity:0.9"/>
+      <stop offset="100%" style="stop-color:#006400;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Rod power aura -->
+  <ellipse cx="75" cy="90" rx="70" ry="65" fill="url(#rodGlow)"/>
+  
+  <!-- Enhanced bottle body -->
+  <rect x="45" y="60" width="60" height="80" rx="12" ry="12" fill="#8FBC8F" stroke="#32CD32" stroke-width="4"/>
+  
+  <!-- Bottle neck -->
+  <rect x="60" y="40" width="30" height="25" fill="#8FBC8F" stroke="#32CD32" stroke-width="4"/>
+  
+  <!-- Enhanced cork with rod symbol -->
+  <rect x="55" y="30" width="40" height="15" rx="5" ry="5" fill="#CD853F" stroke="#B8860B" stroke-width="2"/>
+  <rect x="60" y="32" width="30" height="3" fill="#FFD700"/>
+  <text x="75" y="42" text-anchor="middle" font-family="Arial" font-size="8" fill="#228B22">🎣</text>
+  
+  <!-- Enhanced liquid -->
+  <rect x="50" y="65" width="50" height="70" rx="7" ry="7" fill="url(#rodLiquid)"/>
+  
+  <!-- Enhanced label -->
+  <rect x="48" y="83" width="54" height="34" fill="#FFFFFF" stroke="#32CD32" stroke-width="1" opacity="0.95" rx="5" ry="5"/>
+  <text x="75" y="94" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#000">ROD</text>
+  <text x="75" y="103" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#000">BUFF</text>
+  <text x="75" y="112" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#32CD32">50%</text>
+  
+  <!-- Enhanced power bubbles -->
+  <circle cx="60" cy="75" r="4" fill="#90EE90" opacity="0.9" stroke="#32CD32" stroke-width="1"/>
+  <circle cx="85" cy="85" r="3" fill="#90EE90" opacity="0.9" stroke="#32CD32" stroke-width="1"/>
+  <circle cx="70" cy="95" r="3.5" fill="#90EE90" opacity="0.9" stroke="#32CD32" stroke-width="1"/>
+  <circle cx="65" cy="125" r="2.5" fill="#90EE90" opacity="0.8" stroke="#32CD32" stroke-width="1"/>
+  <circle cx="55" cy="110" r="2" fill="#90EE90" opacity="0.8" stroke="#32CD32" stroke-width="1"/>
+  
+  <!-- Enhanced fishing rods -->
+  <path d="M 20 55 L 20 80 M 20 55 L 35 65" stroke="#8B4513" stroke-width="3" fill="none"/>
+  <circle cx="35" cy="70" r="2" fill="#4169E1" stroke="#32CD32" stroke-width="1"/>
+  <path d="M 115 65 L 115 90 M 115 65 L 130 75" stroke="#8B4513" stroke-width="3" fill="none"/>
+  <circle cx="130" cy="80" r="2" fill="#4169E1" stroke="#32CD32" stroke-width="1"/>
+  
+  <!-- Power lines -->
+  <path d="M 25 95 L 40 95 L 35 90 M 40 95 L 35 100" stroke="#32CD32" stroke-width="2" fill="none"/>
+  <path d="M 110 105 L 125 105 L 120 100 M 125 105 L 120 110" stroke="#32CD32" stroke-width="2" fill="none"/>
+  
+  <!-- More rod effects -->
+  <text x="30" y="40" font-family="Arial" font-size="14" fill="#32CD32">🎣</text>
+  <text x="110" y="50" font-family="Arial" font-size="12" fill="#32CD32">🎣</text>
+  <text x="20" y="80" font-family="Arial" font-size="10" fill="#32CD32">⚡</text>
+  <text x="120" y="90" font-family="Arial" font-size="10" fill="#32CD32">⚡</text>
+  <text x="25" y="120" font-family="Arial" font-size="8" fill="#32CD32">💪</text>
+  <text x="115" y="120" font-family="Arial" font-size="8" fill="#32CD32">💪</text>
+  
+  <!-- Power rings -->
+  <circle cx="75" cy="90" r="55" fill="none" stroke="#32CD32" stroke-width="1" opacity="0.4"/>
+  <circle cx="75" cy="90" r="65" fill="none" stroke="#32CD32" stroke-width="1" opacity="0.2"/>
+  
+  <!-- Strength indicator -->
+  <text x="75" y="20" text-anchor="middle" font-family="Arial" font-size="12" fill="#228B22" font-weight="bold">💪</text>
+</svg>
