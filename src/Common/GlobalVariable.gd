@@ -6,7 +6,6 @@ var rod_ref : Rod = null
 var player_ref : Player = null
 var money : int = 0
 
-<<<<<<< HEAD
 # Potion effects - Fish Slow Potions
 var has_fish_slow_potion_30: bool = false
 var has_fish_slow_potion_50: bool = false  
@@ -26,8 +25,6 @@ var has_rod_buff_potion_70: bool = false
 var has_slow_potion: bool = false
 var has_speed_potion: bool = false
 
-=======
->>>>>>> main
 # UI elements for caught fish display
 var caught_fish_ui : Control = null
 var caught_fish_label : Label = null
@@ -114,7 +111,6 @@ func _get_rarity_color(rarity: FishData.Rarity) -> Color:
 			return Color.GOLD
 		_:
 			return Color.WHITE
-<<<<<<< HEAD
 
 # Helper functions for potion effects
 func get_fish_slow_effect() -> float:
@@ -162,5 +158,3 @@ func has_any_player_speed_potion() -> bool:
 func has_any_rod_buff_potion() -> bool:
 	"""Check if any rod buff potion is active"""
 	return has_rod_buff_potion_30 or has_rod_buff_potion_50 or has_rod_buff_potion_70
-=======
->>>>>>> main

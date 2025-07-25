@@ -32,14 +32,11 @@ func restore_energy(amount: int):
 func _physics_process(_delta):
 	var screen_size = get_viewport_rect().size
 	
-<<<<<<< HEAD
 	# Apply speed potion effect
 	var current_speed = speed
 	if GlobalVariable.has_speed_potion:
 		current_speed = int(speed * 1.2)  # 20% speed increase
 	
-=======
->>>>>>> main
 	match player_state:
 		State.IDLE:
 			if Input.is_action_pressed("arrowRight"):
