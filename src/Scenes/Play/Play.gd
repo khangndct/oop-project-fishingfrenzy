@@ -1,6 +1,8 @@
 extends Node2D
 
 @onready var hud = $HUD
+@onready var player_stats_menu = $HUD/PlayerStatsMenu
+@onready var stats_button = $HUD/StatsButton
 
 func _ready():
 	# Show active potions at start of fishing session
@@ -9,6 +11,14 @@ func _ready():
 	# Connect HUD signal
 	if hud:
 		hud.game_ended.connect(_on_game_end)
+	
+	# Setup player stats menu
+	_setup_stats_menu()
+
+func _setup_stats_menu():
+	# Connect stats button if it exists
+	if stats_button:
+		stats_button.pressed.connect(_on_stats_button_pressed)
 
 func _show_active_potions():
 	# Check Fish Slow Potions (highest level takes priority)
@@ -125,3 +135,15 @@ func has_any_fish_slow_potion() -> bool:
 
 func has_any_player_speed_potion() -> bool:
 	return GlobalVariable.has_player_speed_potion_20 or GlobalVariable.has_player_speed_potion_30 or GlobalVariable.has_player_speed_potion_40 or GlobalVariable.has_speed_potion
+
+func _on_stats_button_pressed():
+	"""Handle stats button press - show player stats menu"""
+	if player_stats_menu:
+		player_stats_menu.show_menu()
+
+func _input(event):
+	"""Handle input events"""
+	# Allow ESC key to close stats menu
+	if event.is_action_pressed("ui_cancel") and player_stats_menu and player_stats_menu.visible:
+		player_stats_menu.hide_menu()
+		get_viewport().set_input_as_handled()  # Prevent other UI from handling ESC

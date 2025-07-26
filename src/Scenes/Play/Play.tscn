@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7elgqy18qob5"]
+[gd_scene load_steps=7 format=3 uid="uid://b7elgqy18qob5"]
 
 [ext_resource type="Script" uid="uid://cyetbrsrjop0s" path="res://Scenes/Play/Play.gd" id="1_2ugot"]
 [ext_resource type="Texture2D" uid="uid://dtcxqrt5pxob6" path="res://Scenes/Play/img/background.png" id="1_a0n2g"]
 [ext_resource type="PackedScene" uid="uid://bsbx0w48xrbo3" path="res://Entities/Player/Player.tscn" id="3_01ami"]
 [ext_resource type="PackedScene" uid="uid://cdric1esr5pm4" path="res://Common/Utils/FishFactory.tscn" id="4_2ugot"]
 [ext_resource type="PackedScene" uid="uid://2p5klf8messb" path="res://Scenes/Play/HUD.tscn" id="5_hud"]
+[ext_resource type="PackedScene" uid="uid://bhdkvxfhddcty" path="res://Scenes/Play/PlayerStatsMenu.tscn" id="6_stats"]
 
 [node name="Play" type="Node2D"]
 script = ExtResource("1_2ugot")
@@ -23,3 +24,14 @@ position = Vector2(644, 180)
 [node name="FishFactory" parent="." instance=ExtResource("4_2ugot")]
 
 [node name="HUD" parent="." instance=ExtResource("5_hud")]
+
+[node name="PlayerStatsMenu" parent="HUD" instance=ExtResource("6_stats")]
+
+[node name="StatsButton" type="Button" parent="HUD"]
+offset_left = 1030.0
+offset_top = 30.0
+offset_right = 1140.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "Player Stats"

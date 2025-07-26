@@ -6,6 +6,18 @@ var rod_ref : Rod = null
 var player_ref : Player = null
 var money : int = 0
 
+# Player persistent stats
+var player_strength : int = 1
+var player_speed_stat : int = 1
+var player_vitality : int = 1
+var player_luck : int = 1
+
+# Player fractional stats for gradual progression
+var player_fractional_strength : float = 0.0
+var player_fractional_speed : float = 0.0
+var player_fractional_vitality : float = 0.0
+var player_fractional_luck : float = 0.0
+
 # Potion effects - Fish Slow Potions
 var has_fish_slow_potion_30: bool = false
 var has_fish_slow_potion_50: bool = false  

@@ -10,6 +10,14 @@ func save_game():
 	
 	var save_data = {
 		"money": GlobalVariable.money,
+		"player_strength": GlobalVariable.player_strength,
+		"player_speed_stat": GlobalVariable.player_speed_stat,
+		"player_vitality": GlobalVariable.player_vitality,
+		"player_luck": GlobalVariable.player_luck,
+		"player_fractional_strength": GlobalVariable.player_fractional_strength,
+		"player_fractional_speed": GlobalVariable.player_fractional_speed,
+		"player_fractional_vitality": GlobalVariable.player_fractional_vitality,
+		"player_fractional_luck": GlobalVariable.player_fractional_luck,
 		"has_fish_slow_potion_30": GlobalVariable.has_fish_slow_potion_30,
 		"has_fish_slow_potion_50": GlobalVariable.has_fish_slow_potion_50,
 		"has_fish_slow_potion_70": GlobalVariable.has_fish_slow_potion_70,
@@ -54,6 +62,26 @@ func load_game():
 		GlobalVariable.money = save_data.money
 		print("Money loaded: ", GlobalVariable.money)
 	
+	# Load player stats
+	if save_data.has("player_strength"):
+		GlobalVariable.player_strength = save_data.player_strength
+	if save_data.has("player_speed_stat"):
+		GlobalVariable.player_speed_stat = save_data.player_speed_stat
+	if save_data.has("player_vitality"):
+		GlobalVariable.player_vitality = save_data.player_vitality
+	if save_data.has("player_luck"):
+		GlobalVariable.player_luck = save_data.player_luck
+	
+	# Load fractional stats
+	if save_data.has("player_fractional_strength"):
+		GlobalVariable.player_fractional_strength = save_data.player_fractional_strength
+	if save_data.has("player_fractional_speed"):
+		GlobalVariable.player_fractional_speed = save_data.player_fractional_speed
+	if save_data.has("player_fractional_vitality"):
+		GlobalVariable.player_fractional_vitality = save_data.player_fractional_vitality
+	if save_data.has("player_fractional_luck"):
+		GlobalVariable.player_fractional_luck = save_data.player_fractional_luck
+	
 	# Load new potion system
 	if save_data.has("has_fish_slow_potion_30"):
 		GlobalVariable.has_fish_slow_potion_30 = save_data.has_fish_slow_potion_30
@@ -85,6 +113,14 @@ func load_game():
 func clear_data():
 	# Reset all global variables to default values
 	GlobalVariable.money = 0
+	GlobalVariable.player_strength = 1
+	GlobalVariable.player_speed_stat = 1
+	GlobalVariable.player_vitality = 1
+	GlobalVariable.player_luck = 1
+	GlobalVariable.player_fractional_strength = 0.0
+	GlobalVariable.player_fractional_speed = 0.0
+	GlobalVariable.player_fractional_vitality = 0.0
+	GlobalVariable.player_fractional_luck = 0.0
 	GlobalVariable.has_fish_slow_potion_30 = false
 	GlobalVariable.has_fish_slow_potion_50 = false
 	GlobalVariable.has_fish_slow_potion_70 = false

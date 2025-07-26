@@ -116,14 +116,38 @@ func spawn_fish():
 	get_tree().current_scene.call_deferred("add_child", fish)
 
 func _select_fish_with_rarity_weight() -> FishData:
-	# Weighted selection based on rarity (makes rare fish actually rare!)
-	var weights = {
-		FishData.Rarity.COMMON: 0,      # 50% chance - most common
-		FishData.Rarity.UNCOMMON: 0,    # 25% chance - fairly common
-		FishData.Rarity.RARE: 0,        # 15% chance - less common
-		FishData.Rarity.EPIC: 0,         # 8% chance - rare with special abilities
-		FishData.Rarity.LEGENDARY: 100     # 2% chance - very rare with special abilities
+	# Base weights for fish rarity (makes rare fish actually rare!)
+	var base_weights = {
+		FishData.Rarity.COMMON: 50,      # 50% base chance - most common
+		FishData.Rarity.UNCOMMON: 25,    # 25% base chance - fairly common
+		FishData.Rarity.RARE: 15,        # 15% base chance - less common
+		FishData.Rarity.EPIC: 8,         # 8% base chance - rare with special abilities
+		FishData.Rarity.LEGENDARY: 2     # 2% base chance - very rare with special abilities
 	}
+	
+	# Apply player's luck bonus to rare fish spawning
+	var weights = base_weights.duplicate()
+	if GlobalVariable.player_ref:
+		var luck_bonus = GlobalVariable.player_ref.get_rare_fish_spawn_bonus()
+		print("🍀 Player luck bonus for rare fish: +", luck_bonus * 100, "%")
+		
+		# Redistribute weights - reduce common fish, increase rare fish
+		var bonus_multiplier = 1.0 + luck_bonus
+		
+		# Reduce common/uncommon spawn rates
+		weights[FishData.Rarity.COMMON] = int(base_weights[FishData.Rarity.COMMON] * (1.0 - luck_bonus * 0.5))
+		weights[FishData.Rarity.UNCOMMON] = int(base_weights[FishData.Rarity.UNCOMMON] * (1.0 - luck_bonus * 0.3))
+		
+		# Increase rare fish spawn rates
+		weights[FishData.Rarity.RARE] = int(base_weights[FishData.Rarity.RARE] * bonus_multiplier)
+		weights[FishData.Rarity.EPIC] = int(base_weights[FishData.Rarity.EPIC] * bonus_multiplier)
+		weights[FishData.Rarity.LEGENDARY] = int(base_weights[FishData.Rarity.LEGENDARY] * bonus_multiplier)
+		
+		# Ensure minimum weights
+		for rarity in weights:
+			weights[rarity] = max(1, weights[rarity])
+		
+		print("🎲 Modified weights - C:", weights[FishData.Rarity.COMMON], " U:", weights[FishData.Rarity.UNCOMMON], " R:", weights[FishData.Rarity.RARE], " E:", weights[FishData.Rarity.EPIC], " L:", weights[FishData.Rarity.LEGENDARY])
 	
 	var filtered_fish = _filter_fish_by_weight(weights)
 	return filtered_fish.pick_random()

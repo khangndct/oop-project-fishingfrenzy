@@ -193,11 +193,31 @@ func _physics_process(delta):
 			if GlobalVariable.has_slow_potion:
 				current_velocity = velocity * 0.1  # 90% speed reduction (10% of original speed)
 			
+			# Apply new potion system slow effects
+			var fish_slow_effect = GlobalVariable.get_fish_slow_effect()
+			if fish_slow_effect > 0:
+				current_velocity = velocity * (1.0 - fish_slow_effect)
+			
 			position += current_velocity
+			
+			# Keep fish within screen boundaries
+			_clamp_to_screen_bounds()
+			
 			# Check if fish should use special ability
 			_check_special_ability_usage()
 		State.CATCHED:
-			position = GlobalVariable.hook_ref.global_position
+			# Apply player strength effect on caught fish movement
+			var struggle_reduction = 1.0
+			if GlobalVariable.player_ref:
+				struggle_reduction = 1.0 - GlobalVariable.player_ref.get_fish_slow_effect_on_catch()
+				struggle_reduction = max(0.1, struggle_reduction)  # Fish still struggle at least 10%
+			
+			# Fish struggles less when player has higher strength
+			var struggle_offset = Vector2(
+				randf_range(-2.0, 2.0) * struggle_reduction,
+				randf_range(-2.0, 2.0) * struggle_reduction
+			)
+			position = GlobalVariable.hook_ref.global_position + struggle_offset
 
 func _apply_movement_pattern(_delta):
 	if not fish_data or not is_instance_valid(fish_data):
@@ -207,10 +227,26 @@ func _apply_movement_pattern(_delta):
 	var speed = base_velocity.length()
 	var direction = base_velocity.normalized()
 	
+	# Check if fish is near vertical boundaries only (allow horizontal exit)
+	var screen_size = get_viewport_rect().size
+	var margin = 80.0
+	var near_vertical_boundary = (position.y < margin or position.y > screen_size.y - margin)
+	
+	if near_vertical_boundary:
+		# Only steer away from top/bottom boundaries
+		var center_y = screen_size.y * 0.5
+		var to_center_y = (center_y - position.y) / abs(center_y - position.y) if center_y != position.y else 0
+		
+		# Adjust Y direction to avoid top/bottom boundaries
+		if position.y < margin:
+			direction.y = lerp(direction.y, abs(direction.y), 0.2)  # Steer downward
+		elif position.y > screen_size.y - margin:
+			direction.y = lerp(direction.y, -abs(direction.y), 0.2)  # Steer upward
+	
 	match pattern:
 		"straight":
-			# Keep original velocity
-			velocity = base_velocity
+			# Keep original velocity with boundary awareness
+			velocity = direction * speed
 		
 		"slight_wave":
 			# Gentle sine wave movement
@@ -237,7 +273,87 @@ func _apply_movement_pattern(_delta):
 		
 		"teleport":
 			# Occasional instant position change (handled in special ability)
-			velocity = base_velocity
+			# Also handle random teleportation for legendary fish movement
+			if randf() < 0.001:  # Very rare random teleport (0.1% chance per frame)
+				_perform_safe_teleport()
+			velocity = direction * speed  # Use boundary-aware direction
+
+func _clamp_to_screen_bounds():
+	"""Keep fish within screen boundaries and adjust velocity if hitting edges"""
+	var screen_size = get_viewport_rect().size
+	var margin = 50.0  # Keep fish at least 50 pixels from screen edge
+	
+	var sprite_size = Vector2(32, 32)  # Default fish size
+	if has_node("Sprite2D") and $Sprite2D.texture:
+		sprite_size = $Sprite2D.texture.get_size()
+	
+	var half_sprite = sprite_size * 0.5
+	var min_bounds = Vector2(margin + half_sprite.x, margin + half_sprite.y)
+	var max_bounds = Vector2(screen_size.x - margin - half_sprite.x, screen_size.y - margin - half_sprite.y)
+	
+	var was_clamped = false
+	var new_position = position
+	
+	# Only clamp Y position (top and bottom) - allow fish to exit left and right
+	# Fish should be able to go off-screen horizontally to be deleted naturally
+	if position.y < min_bounds.y:
+		new_position.y = min_bounds.y
+		was_clamped = true
+	elif position.y > max_bounds.y:
+		new_position.y = max_bounds.y
+		was_clamped = true
+	
+	position = new_position
+	
+	# Bounce or redirect velocity if fish hit boundaries
+	if was_clamped:
+		_handle_boundary_collision()
+
+func _handle_boundary_collision():
+	"""Handle fish behavior when hitting screen boundaries (only top/bottom)"""
+	var screen_size = get_viewport_rect().size
+	var margin = 50.0
+	
+	print("🔄 ", fish_data.fish_name, " hit vertical boundary at position: ", position)
+	
+	# Only handle vertical bouncing - fish can exit horizontally
+	if position.y <= margin or position.y >= screen_size.y - margin:
+		velocity.y = -velocity.y  # Bounce vertically
+		print("   Bouncing vertically")
+	
+	# Add some randomness to prevent repetitive bouncing
+	var random_factor = 0.8 + randf() * 0.4  # 0.8 to 1.2 multiplier
+	velocity *= random_factor
+	
+	# Gentle steering away from top/bottom boundaries
+	var center_y = screen_size.y * 0.5
+	if position.y <= margin:
+		# Near top, steer slightly downward
+		velocity.y = abs(velocity.y)  # Ensure downward direction
+	elif position.y >= screen_size.y - margin:
+		# Near bottom, steer slightly upward
+		velocity.y = -abs(velocity.y)  # Ensure upward direction
+
+func _get_safe_teleport_position() -> Vector2:
+	"""Get a safe position for teleportation that's within screen bounds"""
+	var screen_size = get_viewport_rect().size
+	var margin = 100.0  # Larger margin for teleportation
+	
+	var safe_x = randf_range(margin, screen_size.x - margin)
+	var safe_y = randf_range(margin, screen_size.y - margin)
+	
+	return Vector2(safe_x, safe_y)
+
+func _perform_safe_teleport():
+	"""Teleport fish to a safe position within screen bounds"""
+	var old_pos = position
+	var new_pos = _get_safe_teleport_position()
+	position = new_pos
+	
+	print("✨ ", fish_data.fish_name, " teleported from ", old_pos, " to ", new_pos)
+	
+	# Show a brief teleport effect
+	_show_fish_notification("✨ TELEPORT!", Color.CYAN)
 
 func _check_special_ability_usage():
 	# Early null check to prevent errors
@@ -257,9 +373,20 @@ func _check_special_ability_usage():
 	
 	print("🎯 ", fish_data.fish_name, " ready to use ability: ", fish_data.get_special_ability())
 	
-	# Reasonable chance to activate ability (5% chance per frame when ready)
-	# This creates exciting but not overwhelming ability usage
-	if randf() < 0.05:  # 5% chance per frame (~1.2 seconds average at 60fps)
+	# Calculate ability activation chance based on player stats
+	var base_chance = 0.05  # 5% base chance per frame
+	var player_resistance = 0.0
+	
+	# Apply player's luck-based resistance to fish abilities
+	if GlobalVariable.player_ref:
+		player_resistance = GlobalVariable.player_ref.get_fish_ability_resistance()
+		print("🛡️ Player resistance to fish abilities: ", player_resistance * 100, "%")
+	
+	var final_chance = base_chance * (1.0 - player_resistance)
+	final_chance = max(0.01, final_chance)  # Minimum 1% chance
+	
+	# Reasonable chance to activate ability with player resistance factor
+	if randf() < final_chance:
 		_activate_special_ability()
 
 func _activate_special_ability():
@@ -387,21 +514,48 @@ func _can_escape_due_to_ability() -> bool:
 	if not fish_data or not is_instance_valid(fish_data) or not fish_data.has_special_ability():
 		return false
 	
-	# Legendary fish with invisibility have 30% chance to escape when hooked
+	# Base escape chances
+	var base_escape_chance = 0.0
 	if fish_data.get_special_ability() == "invisibility" and is_ability_active:
-		return randf() < 0.3
+		base_escape_chance = 0.3  # 30% base chance for legendary fish
+	elif fish_data.get_special_ability() == "dash" and is_ability_active:
+		base_escape_chance = 0.15  # 15% base chance for epic fish
 	
-	# Epic fish with dash have 15% chance to escape when hooked
-	if fish_data.get_special_ability() == "dash" and is_ability_active:
-		return randf() < 0.15
+	if base_escape_chance == 0.0:
+		return false
 	
-	return false
+	# Apply player's stat-based resistance
+	var player_escape_modifier = 1.0
+	if GlobalVariable.player_ref:
+		player_escape_modifier = GlobalVariable.player_ref.get_fish_escape_chance_modifier()
+		print("🎣 Player escape modifier: ", player_escape_modifier, " (lower is better)")
+	
+	var final_escape_chance = base_escape_chance * player_escape_modifier
+	final_escape_chance = max(0.05, final_escape_chance)  # Minimum 5% escape chance
+	
+	print("🏃 ", fish_data.fish_name, " escape chance: ", final_escape_chance * 100, "%")
+	return randf() < final_escape_chance
 
 func _escape_with_ability():
 	# Trigger special ability as escape mechanism
 	if not is_ability_active and not is_ability_on_cooldown:
 		_activate_special_ability()
 	
-	# Move fish away from hook quickly
+	# Move fish away from hook quickly - allow horizontal escape
 	var escape_direction = (position - GlobalVariable.hook_ref.global_position).normalized()
-	velocity = escape_direction * fish_data.get_effective_speed() * 2.0
+	var escape_speed = fish_data.get_effective_speed() * 2.0
+	
+	# Only check if escape would go out of vertical bounds (allow horizontal exit)
+	var screen_size = get_viewport_rect().size
+	var margin = 100.0
+	var projected_position = position + escape_direction * 100  # Project 100 pixels ahead
+	
+	# Only redirect if escape would go out of vertical bounds (top/bottom)
+	if (projected_position.y < margin or projected_position.y > screen_size.y - margin):
+		# Keep horizontal escape but adjust vertical direction
+		var center_y = screen_size.y * 0.5
+		var safe_y_direction = (center_y - position.y) / abs(center_y - position.y) if center_y != position.y else 0
+		escape_direction.y = safe_y_direction * 0.5  # Moderate vertical adjustment
+		escape_direction = escape_direction.normalized()
+	
+	velocity = escape_direction * escape_speed

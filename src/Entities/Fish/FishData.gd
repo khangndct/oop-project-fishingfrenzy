@@ -96,11 +96,16 @@ class LegendaryBehavior extends FishBehaviorStrategy:
 			var sprite = fish.get_node("Sprite2D")
 			sprite.modulate.a = 0.3  # Make 70% transparent
 		
-		# Teleport to random position
-		var screen_size = fish.get_viewport_rect().size
-		var new_x = randf_range(100, screen_size.x - 100)
-		var new_y = randf_range(100, screen_size.y - 100)
-		fish.position = Vector2(new_x, new_y)
+		# Teleport to safe position using fish's boundary checking
+		if fish.has_method("_get_safe_teleport_position"):
+			fish.position = fish._get_safe_teleport_position()
+		else:
+			# Fallback: use screen bounds with safety margin
+			var screen_size = fish.get_viewport_rect().size
+			var margin = 100.0
+			var new_x = randf_range(margin, screen_size.x - margin)
+			var new_y = randf_range(margin, screen_size.y - margin)
+			fish.position = Vector2(new_x, new_y)
 		
 		print("👻 Legendary fish uses INVISIBILITY and TELEPORTS!")
 	
@@ -204,7 +209,16 @@ func get_special_ability() -> String:
 	return get_behavior_strategy().get_special_ability()
 
 func get_catch_difficulty() -> float:
-	return get_behavior_strategy().get_catch_difficulty()
+	var base_difficulty = get_behavior_strategy().get_catch_difficulty()
+	
+	# Apply player stats to modify catch difficulty
+	if GlobalVariable.player_ref:
+		var player_modifier = GlobalVariable.player_ref.get_fish_catch_difficulty_modifier()
+		base_difficulty *= player_modifier
+		# Ensure minimum difficulty
+		base_difficulty = max(0.3, base_difficulty)
+	
+	return base_difficulty
 
 # Behavior delegation methods
 func has_special_ability() -> bool:
