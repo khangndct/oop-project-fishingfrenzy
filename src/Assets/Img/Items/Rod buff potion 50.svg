@@ -32,9 +32,14 @@
   
   <!-- Enhanced label -->
   <rect x="48" y="83" width="54" height="34" fill="#FFFFFF" stroke="#32CD32" stroke-width="1" opacity="0.95" rx="5" ry="5"/>
-  <text x="75" y="94" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#000">ROD</text>
-  <text x="75" y="103" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#000">BUFF</text>
-  <text x="75" y="112" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#32CD32">50%</text>
+  
+  <!-- Fishing rod icon in label -->
+  <line x1="68" y1="92" x2="68" y2="102" stroke="#32CD32" stroke-width="2"/>
+  <circle cx="68" cy="90" r="1.5" fill="#32CD32"/>
+  <path d="M 68 102 Q 73 103 75 98" stroke="#32CD32" stroke-width="1" fill="none"/>
+  
+  <!-- Percentage text -->
+  <text x="75" y="108" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#000">50%</text>
   
   <!-- Enhanced power bubbles -->
   <circle cx="60" cy="75" r="4" fill="#90EE90" opacity="0.9" stroke="#32CD32" stroke-width="1"/>

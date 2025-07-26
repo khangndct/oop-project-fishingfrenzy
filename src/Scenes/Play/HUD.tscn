@@ -36,6 +36,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [node name="HUD" type="CanvasLayer"]
+layer = 5
 script = ExtResource("1_hud_script")
 
 [node name="EnergyBar" type="ProgressBar" parent="."]
@@ -71,4 +72,14 @@ offset_bottom = 70.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_pixel_font")
 theme_override_font_sizes/font_size = 16
-text = "Back"
+text = "Finish Game"
+
+[node name="QuestButton" type="Button" parent="."]
+offset_left = 850.0
+offset_top = 30.0
+offset_right = 950.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_pixel_font")
+theme_override_font_sizes/font_size = 16
+text = "Quests"

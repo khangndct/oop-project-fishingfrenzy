@@ -31,9 +31,14 @@
   
   <!-- Enhanced label with border -->
   <rect x="50" y="85" width="50" height="30" fill="#FFFFFF" stroke="#1E90FF" stroke-width="1" opacity="0.95" rx="3" ry="3"/>
-  <text x="75" y="95" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#000">SLOW</text>
-  <text x="75" y="105" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#000">POTION</text>
-  <text x="75" y="113" text-anchor="middle" font-family="Arial" font-size="6" fill="#1E90FF">50%</text>
+  
+  <!-- Fish icon in label -->
+  <path d="M65 95 L75 92 L83 95 L80 97 L83 99 L75 98 L65 95 Z" fill="#1E90FF"/>
+  <circle cx="70" cy="95" r="1" fill="black"/>
+  <path d="M60 97 L65 95 L60 93" fill="#1E90FF"/>
+  
+  <!-- Percentage text -->
+  <text x="75" y="108" text-anchor="middle" font-family="Arial" font-size="6" fill="#000" font-weight="bold">50%</text>
   
   <!-- Enhanced bubbles with glow -->
   <circle cx="60" cy="75" r="4" fill="#FFFFFF" opacity="0.8" stroke="#00FFFF" stroke-width="1"/>

@@ -1,6 +1,7 @@
 extends Control
 
 @onready var back_button = $BackButton
+@onready var clear_potions_button = $ClearPotionsButton
 @onready var item_list = $ItemList
 @onready var item_container = $MainContainer/ItemsPanel/ItemContainer/GridContainer
 @onready var confirmation_dialog = $ConfirmationDialog
@@ -91,6 +92,48 @@ var shop_items = [
 		"price": 2000,
 		"id": "rod_buff_potion_70",
 		"image_path": "res://Assets/Img/Items/Rod buff potion 70.svg"
+	},
+	{
+		"name": "Great Fortune Food",
+		"description": "Doubles the spawn rate of RARE, EPIC, and LEGENDARY fish. Active for entire fishing session until you return to main menu.",
+		"price": 500,
+		"id": "great_fortune_food",
+		"image_path": "res://Assets/Img/Items/Great fortune food.svg"
+	},
+	{
+		"name": "Super Fortune Food",
+		"description": "Doubles RARE fish spawn rate, triples EPIC and LEGENDARY fish spawn rates. Active for entire fishing session.",
+		"price": 1000,
+		"id": "super_fortune_food",
+		"image_path": "res://Assets/Img/Items/Super fortune food.svg"
+	},
+	{
+		"name": "Ultra Fortune Food",
+		"description": "Doubles RARE fish spawn rate, triples EPIC fish spawn rate, and quadruples LEGENDARY fish spawn rate. Active for entire fishing session.",
+		"price": 2000,
+		"id": "ultra_fortune_food",
+		"image_path": "res://Assets/Img/Items/Ultra fortune food.svg"
+	},
+	{
+		"name": "Recovery Energy Food",
+		"description": "Instantly restores all energy to maximum. Single use item.",
+		"price": 200,
+		"id": "recovery_energy_food",
+		"image_path": "res://Assets/Img/Items/Recovery energy food.svg"
+	},
+	{
+		"name": "Mighty Energy Food",
+		"description": "Reduces energy cost per fish to 1 for the next 50 fish caught. Active until 50 fish are caught.",
+		"price": 800,
+		"id": "mighty_energy_food",
+		"image_path": "res://Assets/Img/Items/Mighty energy food.svg"
+	},
+	{
+		"name": "Grand Energy Food",
+		"description": "Restores all energy and reduces energy cost per fish to 1 for the next 100 fish caught. Ultimate energy boost!",
+		"price": 1500,
+		"id": "grand_energy_food",
+		"image_path": "res://Assets/Img/Items/Grand energy food.svg"
 	}
 ]
 
@@ -146,6 +189,8 @@ func setup_font():
 		var font = load(font_path)
 		
 		# Apply font to various UI elements
+		if clear_potions_button:
+			clear_potions_button.add_theme_font_override("font", font)
 		if detail_item_name:
 			detail_item_name.add_theme_font_override("font", font)
 		if detail_item_description:
@@ -201,6 +246,8 @@ func setup_panel_styles():
 
 func connect_signals():
 	back_button.pressed.connect(_on_back_button_pressed)
+	if clear_potions_button:
+		clear_potions_button.pressed.connect(_on_clear_potions_pressed)
 	purchase_button.pressed.connect(_on_purchase_button_pressed)
 	purchase_now_button.pressed.connect(_on_purchase_now_pressed)
 	cancel_button.pressed.connect(_on_cancel_pressed)
@@ -275,8 +322,8 @@ func create_item_button(item: Dictionary, index: int) -> Control:
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	# Add font
-	var font = load("res://Assets/Font/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf")
-	name_label.add_theme_font_override("font", font)
+	var vcr_font = load("res://Assets/Font/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf")
+	name_label.add_theme_font_override("font", vcr_font)
 	name_label.add_theme_font_size_override("font_size", 16)
 	
 	# Create price label
@@ -285,7 +332,7 @@ func create_item_button(item: Dictionary, index: int) -> Control:
 	price_label.text = price_text
 	price_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	# Add font
-	price_label.add_theme_font_override("font", font)
+	price_label.add_theme_font_override("font", vcr_font)
 	price_label.add_theme_font_size_override("font_size", 16)
 	
 	# Set color based on affordability and ownership
@@ -300,8 +347,12 @@ func create_item_button(item: Dictionary, index: int) -> Control:
 		price_label.add_theme_color_override("font_color", Color.ORANGE_RED)  # Cannot afford
 	
 	# Check if player has enough money and set item modulation
+	var is_available = _is_item_available_by_id(item.id)
+	
 	if is_owned:
 		item_control.modulate = Color(0.7, 0.7, 0.7, 0.8)  # Gray out if owned
+	elif not is_available:
+		item_control.modulate = Color(0.7, 0.7, 0.7, 0.8)  # Gray out if not available due to hierarchy
 	elif not can_afford:
 		item_control.modulate = Color(0.7, 0.7, 0.7, 0.8)  # Gray out if can't afford
 	else:
@@ -310,13 +361,17 @@ func create_item_button(item: Dictionary, index: int) -> Control:
 	# Check if already owned or not enough money
 	var status_label = Label.new()
 	# Add font
-	status_label.add_theme_font_override("font", font)
+	status_label.add_theme_font_override("font", vcr_font)
 	status_label.add_theme_font_size_override("font_size", 12)
 	
 	if _is_item_owned_by_id(item.id):
 		status_label.text = "ALREADY PURCHASED"
 		status_label.modulate = Color.GREEN
 		button.modulate = Color(0.7, 0.7, 0.7)  # Gray out if owned
+	elif not is_available:
+		status_label.text = "UPGRADE REQUIRED"
+		status_label.modulate = Color.ORANGE
+		button.modulate = Color(0.6, 0.6, 0.6)  # Gray out if not available
 	elif item.price > 0 and GlobalVariable.money < item.price:
 		status_label.text = "NOT ENOUGH MONEY"
 		status_label.modulate = Color.RED
@@ -347,14 +402,24 @@ func _on_item_button_pressed(index: int, button: Button):
 	
 	var item = shop_items[selected_item_index]
 	
+	# Check if item is available for purchase
+	var is_available = _is_item_available_by_id(item.id)
+	
 	# Highlight selected item
-	if not _is_item_owned(index):
+	if not _is_item_owned(index) and is_available:
 		button.modulate = Color.YELLOW
 		purchase_button.disabled = false
 		purchase_button.text = "Purchase"
 	else:
-		purchase_button.disabled = true
-		purchase_button.text = "Already Owned"
+		if _is_item_owned(index):
+			purchase_button.disabled = true
+			purchase_button.text = "Already Owned"
+		elif not is_available:
+			purchase_button.disabled = true
+			purchase_button.text = "Upgrade Required"
+		else:
+			purchase_button.disabled = true
+			purchase_button.text = "Cannot Purchase"
 	
 	# Update item detail panel
 	update_item_detail(item)
@@ -379,10 +444,13 @@ func update_item_detail(item: Dictionary):
 	
 	# Set price color based on affordability and ownership
 	var is_owned = _is_item_owned_by_id(item.id)
+	var is_available = _is_item_available_by_id(item.id)
 	var has_enough_money = item.price == 0 or GlobalVariable.money >= item.price
 	
 	if is_owned:
 		detail_price_label.add_theme_color_override("font_color", Color.ORANGE_RED)
+	elif not is_available:
+		detail_price_label.add_theme_color_override("font_color", Color.ORANGE)
 	elif has_enough_money:
 		detail_price_label.add_theme_color_override("font_color", Color.LIME_GREEN)
 	else:
@@ -394,6 +462,11 @@ func update_item_detail(item: Dictionary):
 		detail_status_label.modulate = Color.GREEN
 		purchase_button.disabled = true
 		purchase_button.text = "OWNED"
+	elif not is_available:
+		detail_status_label.text = "Status: UPGRADE REQUIRED"
+		detail_status_label.modulate = Color.ORANGE
+		purchase_button.disabled = true
+		purchase_button.text = "Upgrade Required"
 	elif not has_enough_money:
 		detail_status_label.text = "Status: NOT ENOUGH MONEY"
 		detail_status_label.modulate = Color.RED
@@ -432,7 +505,63 @@ func _is_item_owned_by_id(item_id: String) -> bool:
 		return GlobalVariable.has_rod_buff_potion_50
 	elif item_id == "rod_buff_potion_70":
 		return GlobalVariable.has_rod_buff_potion_70
+	elif item_id == "great_fortune_food":
+		return GlobalVariable.has_great_fortune_food
+	elif item_id == "super_fortune_food":
+		return GlobalVariable.has_super_fortune_food
+	elif item_id == "ultra_fortune_food":
+		return GlobalVariable.has_ultra_fortune_food
+	elif item_id == "recovery_energy_food":
+		return false  # Single use item, never owned
+	elif item_id == "mighty_energy_food":
+		return GlobalVariable.has_mighty_energy_food
+	elif item_id == "grand_energy_food":
+		return GlobalVariable.has_grand_energy_food
 	return false
+
+func _is_item_available_by_id(item_id: String) -> bool:
+	"""Check if an item can be purchased based on potion hierarchy"""
+	# Fish slow potions
+	if item_id == "fish_slow_potion_30":
+		return not (GlobalVariable.has_fish_slow_potion_50 or GlobalVariable.has_fish_slow_potion_70)
+	elif item_id == "fish_slow_potion_50":
+		return not GlobalVariable.has_fish_slow_potion_70
+	elif item_id == "fish_slow_potion_70":
+		return true
+	
+	# Player speed potions
+	elif item_id == "player_speed_potion_20":
+		return not (GlobalVariable.has_player_speed_potion_30 or GlobalVariable.has_player_speed_potion_40)
+	elif item_id == "player_speed_potion_30":
+		return not GlobalVariable.has_player_speed_potion_40
+	elif item_id == "player_speed_potion_40":
+		return true
+	
+	# Rod buff potions
+	elif item_id == "rod_buff_potion_30":
+		return not (GlobalVariable.has_rod_buff_potion_50 or GlobalVariable.has_rod_buff_potion_70)
+	elif item_id == "rod_buff_potion_50":
+		return not GlobalVariable.has_rod_buff_potion_70
+	elif item_id == "rod_buff_potion_70":
+		return true
+	
+	# Fortune foods (hierarchical - higher tier replaces lower)
+	elif item_id == "great_fortune_food":
+		return not (GlobalVariable.has_super_fortune_food or GlobalVariable.has_ultra_fortune_food)
+	elif item_id == "super_fortune_food":
+		return not GlobalVariable.has_ultra_fortune_food
+	elif item_id == "ultra_fortune_food":
+		return true
+	
+	# Energy foods (can own multiple, except recovery is single use)
+	elif item_id == "recovery_energy_food":
+		return true  # Always available (single use)
+	elif item_id == "mighty_energy_food":
+		return not GlobalVariable.has_grand_energy_food  # Can't have both mighty and grand
+	elif item_id == "grand_energy_food":
+		return true  # Can always upgrade to grand
+	
+	return true
 
 func _is_item_owned(index: int) -> bool:
 	var item = shop_items[index]
@@ -496,25 +625,80 @@ func _on_purchase_now_pressed():
 		if item.price > 0:
 			GlobalVariable.money -= item.price
 		
-		# Add the purchased item to global variables
+		# Add the purchased item to global variables and handle hierarchy
 		if item.id == "fish_slow_potion_30":
 			GlobalVariable.has_fish_slow_potion_30 = true
 		elif item.id == "fish_slow_potion_50":
+			# Disable lower tier potion
+			GlobalVariable.has_fish_slow_potion_30 = false
 			GlobalVariable.has_fish_slow_potion_50 = true
 		elif item.id == "fish_slow_potion_70":
+			# Disable lower tier potions
+			GlobalVariable.has_fish_slow_potion_30 = false
+			GlobalVariable.has_fish_slow_potion_50 = false
 			GlobalVariable.has_fish_slow_potion_70 = true
 		elif item.id == "player_speed_potion_20":
 			GlobalVariable.has_player_speed_potion_20 = true
 		elif item.id == "player_speed_potion_30":
+			# Disable lower tier potion
+			GlobalVariable.has_player_speed_potion_20 = false
 			GlobalVariable.has_player_speed_potion_30 = true
 		elif item.id == "player_speed_potion_40":
+			# Disable lower tier potions
+			GlobalVariable.has_player_speed_potion_20 = false
+			GlobalVariable.has_player_speed_potion_30 = false
 			GlobalVariable.has_player_speed_potion_40 = true
 		elif item.id == "rod_buff_potion_30":
 			GlobalVariable.has_rod_buff_potion_30 = true
 		elif item.id == "rod_buff_potion_50":
+			# Disable lower tier potion
+			GlobalVariable.has_rod_buff_potion_30 = false
 			GlobalVariable.has_rod_buff_potion_50 = true
 		elif item.id == "rod_buff_potion_70":
+			# Disable lower tier potions
+			GlobalVariable.has_rod_buff_potion_30 = false
+			GlobalVariable.has_rod_buff_potion_50 = false
 			GlobalVariable.has_rod_buff_potion_70 = true
+		
+		# Fortune Foods (hierarchical)
+		elif item.id == "great_fortune_food":
+			GlobalVariable.has_great_fortune_food = true
+		elif item.id == "super_fortune_food":
+			# Disable lower tier food
+			GlobalVariable.has_great_fortune_food = false
+			GlobalVariable.has_super_fortune_food = true
+		elif item.id == "ultra_fortune_food":
+			# Disable lower tier foods
+			GlobalVariable.has_great_fortune_food = false
+			GlobalVariable.has_super_fortune_food = false
+			GlobalVariable.has_ultra_fortune_food = true
+		
+		# Energy Foods
+		elif item.id == "recovery_energy_food":
+			# Single use - restore energy immediately
+			if GlobalVariable.player_ref:
+				var max_energy = 100 + (GlobalVariable.player_vitality - 1) * 20
+				GlobalVariable.player_ref.energy = max_energy
+				GlobalVariable.player_energy = max_energy
+				print("Energy restored to maximum!")
+		elif item.id == "mighty_energy_food":
+			# Disable conflicting energy food
+			GlobalVariable.has_grand_energy_food = false
+			GlobalVariable.grand_energy_fish_count = 0
+			GlobalVariable.has_mighty_energy_food = true
+			GlobalVariable.mighty_energy_fish_count = 0
+		elif item.id == "grand_energy_food":
+			# Disable conflicting energy food and restore energy
+			GlobalVariable.has_mighty_energy_food = false
+			GlobalVariable.mighty_energy_fish_count = 0
+			GlobalVariable.has_grand_energy_food = true
+			GlobalVariable.grand_energy_fish_count = 0
+			# Restore energy immediately
+			if GlobalVariable.player_ref:
+				var max_energy = 100 + (GlobalVariable.player_vitality - 1) * 20
+				GlobalVariable.player_ref.energy = max_energy
+				GlobalVariable.player_energy = max_energy
+				print("Energy restored and Grand Energy Food activated!")
 		
 		print("Purchased: ", item.name)
 		confirmation_dialog.hide()
@@ -542,3 +726,15 @@ func _show_purchase_success(item_name):
 	# Simple success notification
 	print("Successfully purchased: ", item_name)
 	# You can add a popup or notification here if needed
+
+func _on_clear_potions_pressed():
+	"""Clear all active potion and food effects"""
+	GlobalVariable.clear_session_potions()
+	print("All potion and food effects cleared!")
+	
+	# Refresh the item grid to show updated status
+	populate_item_grid()
+	clear_item_detail()
+	
+	# Show confirmation message
+	print("All active potions and foods have been cleared. You can purchase new ones now.")

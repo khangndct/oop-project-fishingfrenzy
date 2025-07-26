@@ -14,9 +14,15 @@
   
   <!-- Label -->
   <rect x="50" y="85" width="50" height="30" fill="#FFFFFF" opacity="0.9" rx="3" ry="3"/>
-  <text x="75" y="95" text-anchor="middle" font-family="Arial" font-size="7" fill="#000">SPEED</text>
-  <text x="75" y="105" text-anchor="middle" font-family="Arial" font-size="7" fill="#000">POTION</text>
-  <text x="75" y="113" text-anchor="middle" font-family="Arial" font-size="6" fill="#FF0000">+20%</text>
+  
+  <!-- Player icon in label -->
+  <circle cx="72" cy="95" r="3" fill="#FF4500"/>
+  <rect x="70" y="97" width="4" height="6" fill="#FF4500"/>
+  <rect x="69" y="100" width="2" height="3" fill="#FF4500"/>
+  <rect x="73" y="100" width="2" height="3" fill="#FF4500"/>
+  
+  <!-- Percentage text -->
+  <text x="75" y="110" text-anchor="middle" font-family="Arial" font-size="6" fill="#000">+20%</text>
   
   <!-- Energy bubbles -->
   <circle cx="60" cy="75" r="3" fill="#FFFF00" opacity="0.8"/>

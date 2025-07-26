@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fortuneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFEF94;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Glow effect -->
+  <circle cx="50" cy="50" r="48" fill="url(#glow)"/>
+  
+  <!-- Main food circle -->
+  <circle cx="50" cy="50" r="40" fill="url(#fortuneGrad)" stroke="#B8860B" stroke-width="3"/>
+  
+  <!-- Fortune symbols - coins -->
+  <circle cx="35" cy="35" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+  <text x="35" y="38" text-anchor="middle" font-family="Arial" font-size="6" fill="#B8860B">¥</text>
+  
+  <circle cx="65" cy="35" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+  <text x="65" y="38" text-anchor="middle" font-family="Arial" font-size="6" fill="#B8860B">$</text>
+  
+  <circle cx="35" cy="65" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+  <text x="35" y="68" text-anchor="middle" font-family="Arial" font-size="6" fill="#B8860B">€</text>
+  
+  <circle cx="65" cy="65" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+  <text x="65" y="68" text-anchor="middle" font-family="Arial" font-size="6" fill="#B8860B">₹</text>
+  
+  <!-- Central lucky clover -->
+  <path d="M50 45 Q47 42 44 45 Q47 48 50 45 Q53 42 56 45 Q53 48 50 45 M50 45 Q47 48 44 51 Q47 54 50 51 Q53 48 56 51 Q53 54 50 51" fill="#228B22" stroke="#006400" stroke-width="1"/>
+  
+  <!-- Sparkles -->
+  <text x="25" y="25" font-family="Arial" font-size="8" fill="#FFD700">✨</text>
+  <text x="75" y="25" font-family="Arial" font-size="8" fill="#FFD700">✨</text>
+  <text x="25" y="80" font-family="Arial" font-size="8" fill="#FFD700">✨</text>
+  <text x="75" y="80" font-family="Arial" font-size="8" fill="#FFD700">✨</text>
+</svg>
