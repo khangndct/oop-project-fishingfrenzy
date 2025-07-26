@@ -68,13 +68,24 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("spaceBar"):
 				$Line.points[0].y -= current_power
 			if abs($Line.points[1].y - $Line.points[0].y) <= 90:
+				# Store fish reference for popup
+				var caught_fish_data = fish_ref.fish_data
+				
+				# Show congratulations popup
+				if GlobalVariable.hud_ref and caught_fish_data:
+					GlobalVariable.hud_ref.show_fish_catch_popup(caught_fish_data)
+				
+				# Award money
 				GlobalVariable.money += fish_ref.fish_data.get_stat("value")
+				
 				# Reduce player energy when fish is caught
 				var player = get_parent()  # Rod is child of Player
 				if player and player is Player:
 					player.reduce_energy_for_fish()
 					# Gain strength from caught fish
 					_gain_strength_from_fish(player, fish_ref)
+				
+				# Clean up fish
 				if is_instance_valid(fish_ref):
 					fish_ref.queue_free()
 				fish_ref = null

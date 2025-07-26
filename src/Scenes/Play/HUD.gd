@@ -3,11 +3,15 @@ extends CanvasLayer
 @onready var money_label = $MoneyLabel
 @onready var energy_bar = $EnergyBar
 @onready var back_button = $BackButton
+@onready var fish_catch_popup = $FishCatchPopup
 var player_ref : Player
 
 signal game_ended
 
 func _ready():
+	# Set global reference to HUD
+	GlobalVariable.hud_ref = self
+	
 	update_money_display()
 	# Get reference to player
 	player_ref = get_node("../Player")
@@ -20,6 +24,10 @@ func _ready():
 	# Connect back button
 	if back_button:
 		back_button.pressed.connect(_on_back_button_pressed)
+	
+	# Connect catch popup signal
+	if fish_catch_popup:
+		fish_catch_popup.popup_closed.connect(_on_fish_catch_popup_closed)
 
 func _process(_delta):
 	update_money_display()
@@ -47,3 +55,12 @@ func _on_back_button_pressed():
 	game_ended.emit()
 	# Go back to main menu
 	get_tree().change_scene_to_file("res://Scenes/Main/Main.tscn")
+
+func show_fish_catch_popup(fish_data: FishData):
+	"""Show the congratulations popup for a caught fish"""
+	if fish_catch_popup and fish_data:
+		fish_catch_popup.show_catch_popup(fish_data)
+
+func _on_fish_catch_popup_closed():
+	"""Handle when the fish catch popup is closed"""
+	print("Fish catch popup was closed, game resumed")

@@ -1,3 +1,6 @@
 res://Scenes/Main/Main.tscn
-res://Scenes/Shop/Shop.gd
 res://Scenes/Play/PlayerStatsMenu.tscn
+res://Common/GlobalVariable.gd
+res://Entities/Rod/Rod.gd
+res://Scenes/Play/HUD.gd
+res://Entities/Fish/Fish.gd

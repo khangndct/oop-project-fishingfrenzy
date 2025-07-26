@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://2p5klf8messb"]
+[gd_scene load_steps=7 format=3 uid="uid://2p5klf8messb"]
 
 [ext_resource type="Script" uid="uid://xldj8vde1txf" path="res://Scenes/Play/HUD.gd" id="1_hud_script"]
 [ext_resource type="FontFile" uid="uid://65rfcb3imfa2" path="res://Assets/Font/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf" id="2_pixel_font"]
+[ext_resource type="PackedScene" uid="uid://bq8r7u3k1v4h2" path="res://Scenes/Play/FishCatchPopup.tscn" id="3_catch_popup"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.2, 0.2, 0.2, 0.8)
@@ -72,3 +73,5 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_pixel_font")
 theme_override_font_sizes/font_size = 16
 text = "Back"
+
+[node name="FishCatchPopup" parent="." instance=ExtResource("3_catch_popup")]
