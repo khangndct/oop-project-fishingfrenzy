@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var money_label = $MoneyLabel
 @onready var energy_bar = $EnergyBar
 @onready var back_button = $BackButton
+@onready var fish_catch_popup = $FishCatchPopup
 @onready var quest_button = $QuestButton
 var player_ref : Player
 
@@ -11,6 +12,9 @@ signal quest_button_pressed
 signal finish_game_pressed
 
 func _ready():
+	# Set global reference to HUD
+	GlobalVariable.hud_ref = self
+	
 	update_money_display()
 	# Get reference to player
 	player_ref = get_node("../Player")
@@ -22,11 +26,16 @@ func _ready():
 	
 	# Connect buttons
 	if back_button:
-		back_button.text = "Finish Game"  # Change text
+		back_button.pressed.connect(_on_back_button_pressed)
+    back_button.text = "Finish Game"  # Change text
 		back_button.pressed.connect(_on_finish_game_pressed)
 		# Prevent button from keeping focus after click
 		back_button.focus_mode = Control.FOCUS_NONE
 	
+	# Connect catch popup signal
+	if fish_catch_popup:
+		fish_catch_popup.popup_closed.connect(_on_fish_catch_popup_closed)
+    
 	if quest_button:
 		quest_button.pressed.connect(_on_quest_button_pressed)
 		# Prevent button from keeping focus after click
@@ -51,4 +60,30 @@ func _on_finish_game_pressed():
 
 func _on_back_button_pressed():
 	# This function is kept for compatibility but renamed functionality
-	_on_finish_game_pressed()
+  
+	# Reset potions when back to main (consumed after session)
+	if GlobalVariable.has_slow_potion:
+		GlobalVariable.has_slow_potion = false
+		print("Slow Motion Potion consumed - purchase again in shop if needed")
+	if GlobalVariable.has_speed_potion:
+		GlobalVariable.has_speed_potion = false
+		print("Speed Potion consumed - purchase again in shop if needed")
+	
+	# Save game before going back
+	var save_manager = preload("res://Common/Utils/SaveManager.gd").new()
+	save_manager.save_game()
+	
+	# Emit signal to notify game end
+	game_ended.emit()
+	# Go back to main menu
+	get_tree().change_scene_to_file("res://Scenes/Main/Main.tscn")
+	#_on_finish_game_pressed()
+
+func show_fish_catch_popup(fish_data: FishData):
+	"""Show the congratulations popup for a caught fish"""
+	if fish_catch_popup and fish_data:
+		fish_catch_popup.show_catch_popup(fish_data)
+
+func _on_fish_catch_popup_closed():
+	"""Handle when the fish catch popup is closed"""
+	print("Fish catch popup was closed, game resumed")

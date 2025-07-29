@@ -125,19 +125,31 @@ func _physics_process(delta):
 				else:
 					$Line.points[0].y = new_y
 			if abs($Line.points[1].y - $Line.points[0].y) <= 90:
+
+				# Store fish reference for popup
+				var caught_fish_data = fish_ref.fish_data
+				
+				# Show congratulations popup
+				if GlobalVariable.hud_ref and caught_fish_data:
+					GlobalVariable.hud_ref.show_fish_catch_popup(caught_fish_data)
+				
+				# Award money
 				var money_earned = fish_ref.fish_data.get_stat("value")
 				GlobalVariable.money += money_earned
-				GlobalVariable.current_session_money_earned += money_earned
-				# Update energy food counters
+        GlobalVariable.current_session_money_earned += money_earned
+        # Update energy food counters
 				GlobalVariable.on_fish_caught()
 				# Track fish for quest system
 				GlobalVariable.track_fish_caught(fish_ref.fish_data.rarity)
+
 				# Reduce player energy when fish is caught
 				var player = get_parent()  # Rod is child of Player
 				if player and player is Player:
 					player.reduce_energy_for_fish()
 					# Gain strength from caught fish
 					_gain_strength_from_fish(player, fish_ref)
+				
+				# Clean up fish
 				if is_instance_valid(fish_ref):
 					fish_ref.queue_free()
 				fish_ref = null

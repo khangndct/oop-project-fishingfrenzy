@@ -4,6 +4,7 @@ var is_fish_being_caught := false
 var hook_ref : Node = null
 var rod_ref : Rod = null
 var player_ref : Player = null
+var hud_ref : CanvasLayer = null
 var money : int = 0
 
 # Player persistent stats
