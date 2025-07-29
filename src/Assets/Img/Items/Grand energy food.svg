@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00BFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="epicEnergyGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#00BFFF;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Epic energy glow -->
+  <rect x="8" y="8" width="84" height="84" rx="25" fill="url(#epicEnergyGlow)"/>
+  
+  <!-- Main food container -->
+  <rect x="12" y="12" width="76" height="76" rx="20" fill="url(#grandGrad)" stroke="#1E90FF" stroke-width="4"/>
+  
+  <!-- Central energy orb -->
+  <circle cx="50" cy="50" r="15" fill="#FFFFFF" stroke="#1E90FF" stroke-width="3"/>
+  <circle cx="50" cy="50" r="10" fill="#87CEEB" opacity="0.8"/>
+  <circle cx="50" cy="50" r="5" fill="#00BFFF"/>
+  
+  <!-- Energy waves around orb -->
+  <circle cx="50" cy="50" r="20" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.6"/>
+  <circle cx="50" cy="50" r="25" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Corner energy crystals -->
+  <polygon points="25,25 22,30 25,35 28,30" fill="#FFFFFF" stroke="#1E90FF" stroke-width="1"/>
+  <polygon points="75,25 72,30 75,35 78,30" fill="#FFFFFF" stroke="#1E90FF" stroke-width="1"/>
+  <polygon points="25,75 22,80 25,85 28,80" fill="#FFFFFF" stroke="#1E90FF" stroke-width="1"/>
+  <polygon points="75,75 72,80 75,85 78,80" fill="#FFFFFF" stroke="#1E90FF" stroke-width="1"/>
+  
+  <!-- Electric sparks -->
+  <path d="M30 45 L35 40 M35 45 L30 40" stroke="#FFFF00" stroke-width="2"/>
+  <path d="M70 45 L65 40 M65 45 L70 40" stroke="#FFFF00" stroke-width="2"/>
+  <path d="M30 65 L35 60 M35 65 L30 60" stroke="#FFFF00" stroke-width="2"/>
+  <path d="M70 65 L65 60 M65 65 L70 60" stroke="#FFFF00" stroke-width="2"/>
+  
+  <!-- Energy symbols -->
+  <text x="20" y="20" font-family="Arial" font-size="10" fill="#FFFF00">⚡</text>
+  <text x="85" y="20" font-family="Arial" font-size="10" fill="#FFFF00">⚡</text>
+  <text x="20" y="90" font-family="Arial" font-size="10" fill="#FFFF00">⚡</text>
+  <text x="85" y="90" font-family="Arial" font-size="10" fill="#FFFF00">⚡</text>
+</svg>

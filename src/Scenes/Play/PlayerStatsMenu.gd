@@ -16,6 +16,10 @@ func _ready():
 	# Connect close button
 	if close_button:
 		close_button.pressed.connect(_on_close_button_pressed)
+		# Prevent button from keeping focus after click
+		close_button.focus_mode = Control.FOCUS_NONE
+	else:
+		print("Warning: close_button not found in PlayerStatsMenu")
 	
 	# Load player picture
 	_load_player_picture()
@@ -26,6 +30,10 @@ func _load_player_picture():
 		var player_texture = load("res://Assets/Img/Player/Player.svg") as Texture2D
 		if player_texture:
 			player_picture.texture = player_texture
+		else:
+			print("Warning: Could not load player texture")
+	else:
+		print("Warning: player_picture not found in PlayerStatsMenu")
 
 func show_menu():
 	"""Display the player stats menu"""
@@ -54,7 +62,13 @@ func hide_menu():
 	visible = false
 
 func _on_close_button_pressed():
-	hide_menu()
+	# Update parent's UI state first, then hide
+	var play_scene = get_tree().current_scene
+	if play_scene and play_scene.has_method("_close_stats_menu"):
+		play_scene._close_stats_menu()
+	else:
+		# Fallback if not called from Play scene
+		hide_menu()
 
 func _update_stats_display():
 	"""Update the stats display on the left side"""

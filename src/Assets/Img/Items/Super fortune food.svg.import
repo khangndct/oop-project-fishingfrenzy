@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4e8ehov8hi66"
-valid=false
+uid="uid://ic6uywgfkloi"
+path="res://.godot/imported/Super fortune food.svg-7bbc2ca1f4874f0264dbdd021f423e31.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://Scenes/Shop/img/shop_beach_background.svg"
+source_file="res://Assets/Img/Items/Super fortune food.svg"
+dest_files=["res://.godot/imported/Super fortune food.svg-7bbc2ca1f4874f0264dbdd021f423e31.ctex"]
 
 [params]
 

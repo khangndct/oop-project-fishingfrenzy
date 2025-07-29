@@ -39,12 +39,19 @@ func _ready():
 	fractional_vitality = GlobalVariable.player_fractional_vitality
 	fractional_luck = GlobalVariable.player_fractional_luck
 	
-	energy = max_energy  # Initialize energy to max
+	# Load persistent energy or initialize to max if first time
+	if GlobalVariable.player_energy <= 0:
+		energy = max_energy  # First time initialization
+		GlobalVariable.player_energy = energy
+	else:
+		energy = GlobalVariable.player_energy  # Load saved energy
+	
 	# Set global reference to this player
 	GlobalVariable.player_ref = self
 
 func set_energy(new_energy: int):
 	energy = clamp(new_energy, 0, max_energy)
+	GlobalVariable.player_energy = energy  # Save to global
 	energy_changed.emit(energy)
 
 func set_strength(new_strength: int):
@@ -142,8 +149,10 @@ func get_rod_speed_multiplier() -> float:
 	return 1.0 + (speed_stat - 1) * 0.15  # +15% rod speed per speed stat point
 
 func get_energy_cost() -> int:
-	"""Return actual energy cost based on vitality"""
-	return max(1, energy_cost_per_fish)
+	"""Return actual energy cost based on vitality and energy food effects"""
+	var base_cost = max(1, energy_cost_per_fish)
+	var food_cost = GlobalVariable.get_energy_cost_modifier()
+	return min(base_cost, food_cost)  # Use the lower cost
 
 func get_luck_bonus() -> float:
 	"""Return luck bonus for rare fish spawning and special ability resistance"""

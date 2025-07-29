@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b7elgqy18qob5"]
+[gd_scene load_steps=9 format=3 uid="uid://b7elgqy18qob5"]
 
 [ext_resource type="Script" uid="uid://cyetbrsrjop0s" path="res://Scenes/Play/Play.gd" id="1_2ugot"]
 [ext_resource type="Texture2D" uid="uid://dtcxqrt5pxob6" path="res://Scenes/Play/img/background.png" id="1_a0n2g"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cdric1esr5pm4" path="res://Common/Utils/FishFactory.tscn" id="4_2ugot"]
 [ext_resource type="PackedScene" uid="uid://2p5klf8messb" path="res://Scenes/Play/HUD.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://bhdkvxfhddcty" path="res://Scenes/Play/PlayerStatsMenu.tscn" id="6_stats"]
+[ext_resource type="PackedScene" uid="uid://bfy86i4x2yqj4" path="res://Scenes/Play/QuestUI.tscn" id="7_quest"]
+[ext_resource type="PackedScene" uid="uid://br5ckqgvynvgf" path="res://Scenes/Play/LevelCompletionScreen.tscn" id="8_completion"]
 
 [node name="Play" type="Node2D"]
 script = ExtResource("1_2ugot")
@@ -35,3 +37,10 @@ offset_bottom = 70.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 16
 text = "Player Stats"
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="QuestUI" parent="UILayer" instance=ExtResource("7_quest")]
+
+[node name="LevelCompletionScreen" parent="UILayer" instance=ExtResource("8_completion")]

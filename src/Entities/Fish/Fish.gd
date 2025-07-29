@@ -207,15 +207,16 @@ func _physics_process(delta):
 			_check_special_ability_usage()
 		State.CATCHED:
 			# Apply player strength effect on caught fish movement
+			# Fish struggles less when player has higher strength
 			var struggle_reduction = 1.0
 			if GlobalVariable.player_ref:
 				struggle_reduction = 1.0 - GlobalVariable.player_ref.get_fish_slow_effect_on_catch()
-				struggle_reduction = max(0.1, struggle_reduction)  # Fish still struggle at least 10%
+				struggle_reduction = max(0.3, struggle_reduction)  # Fish still struggle at least 30% for visual effect
 			
-			# Fish struggles less when player has higher strength
+			# Fish struggles less when player has higher strength but still visible
 			var struggle_offset = Vector2(
-				randf_range(-2.0, 2.0) * struggle_reduction,
-				randf_range(-2.0, 2.0) * struggle_reduction
+				randf_range(-3.0, 3.0) * struggle_reduction,
+				randf_range(-3.0, 3.0) * struggle_reduction
 			)
 			position = GlobalVariable.hook_ref.global_position + struggle_offset
 

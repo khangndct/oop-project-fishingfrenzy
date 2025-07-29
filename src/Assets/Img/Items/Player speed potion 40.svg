@@ -41,9 +41,15 @@
   <!-- Lightning-powered label -->
   <rect x="48" y="83" width="54" height="34" fill="#FFFFFF" stroke="#FFD700" stroke-width="2" opacity="0.98" rx="5" ry="5"/>
   <rect x="50" y="85" width="50" height="30" fill="none" stroke="#FF4500" stroke-width="1" rx="3" ry="3"/>
-  <text x="75" y="95" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#8B0000">EPIC</text>
-  <text x="75" y="105" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#8B0000">SPEED</text>
-  <text x="75" y="113" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#FF4500">+40%</text>
+  
+  <!-- Player icon in label -->
+  <circle cx="72" cy="95" r="3" fill="#8B0000"/>
+  <rect x="70" y="97" width="4" height="6" fill="#8B0000"/>
+  <rect x="69" y="100" width="2" height="3" fill="#8B0000"/>
+  <rect x="73" y="100" width="2" height="3" fill="#8B0000"/>
+  
+  <!-- Percentage text -->
+  <text x="75" y="110" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#8B0000">+40%</text>
   
   <!-- Electric energy bubbles -->
   <circle cx="60" cy="75" r="5" fill="#FFD700" opacity="0.95" stroke="#FF4500" stroke-width="2"/>
