@@ -32,9 +32,15 @@
   
   <!-- Enhanced label -->
   <rect x="48" y="83" width="54" height="34" fill="#FFFFFF" stroke="#FF4500" stroke-width="1" opacity="0.95" rx="5" ry="5"/>
-  <text x="75" y="95" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#000">SPEED</text>
-  <text x="75" y="105" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#000">POTION</text>
-  <text x="75" y="113" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#FF4500">+30%</text>
+  
+  <!-- Player icon in label -->
+  <circle cx="72" cy="95" r="3" fill="#FF4500"/>
+  <rect x="70" y="97" width="4" height="6" fill="#FF4500"/>
+  <rect x="69" y="100" width="2" height="3" fill="#FF4500"/>
+  <rect x="73" y="100" width="2" height="3" fill="#FF4500"/>
+  
+  <!-- Percentage text -->
+  <text x="75" y="110" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#000">+30%</text>
   
   <!-- Enhanced energy bubbles -->
   <circle cx="60" cy="75" r="4" fill="#FFFF00" opacity="0.9" stroke="#FF4500" stroke-width="1"/>

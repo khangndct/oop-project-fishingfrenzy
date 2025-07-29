@@ -12,15 +12,21 @@
   <!-- Liquid inside -->
   <rect x="50" y="65" width="50" height="70" rx="5" ry="5" fill="#00CED1" opacity="0.8"/>
   
-  <!-- Label -->
+  <!-- White label -->
   <rect x="50" y="85" width="50" height="30" fill="#FFFFFF" opacity="0.9" rx="3" ry="3"/>
-  <text x="75" y="95" text-anchor="middle" font-family="Arial" font-size="8" fill="#000">SLOW</text>
-  <text x="75" y="105" text-anchor="middle" font-family="Arial" font-size="8" fill="#000">POTION</text>
+  
+  <!-- Fish icon in label -->
+  <path d="M65 95 L75 92 L83 95 L80 97 L83 99 L75 98 L65 95 Z" fill="#4169E1"/>
+  <circle cx="70" cy="95" r="1" fill="black"/>
+  <path d="M60 97 L65 95 L60 93" fill="#4169E1"/>
+  
+  <!-- Slow text -->
+  <text x="75" y="108" text-anchor="middle" font-family="Arial" font-size="6" fill="#000">30%</text>
   
   <!-- Bubbles -->
   <circle cx="60" cy="75" r="3" fill="#FFFFFF" opacity="0.6"/>
   <circle cx="85" cy="85" r="2" fill="#FFFFFF" opacity="0.6"/>
-  <circle cx="70" cy="95" r="2.5" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="70" cy="120" r="2.5" fill="#FFFFFF" opacity="0.6"/>
   
   <!-- Magic sparkles -->
   <text x="35" y="45" font-family="Arial" font-size="12" fill="#FFD700">✨</text>

@@ -41,10 +41,14 @@
   <!-- Master label -->
   <rect x="48" y="83" width="54" height="34" fill="#FFFFFF" stroke="#FFD700" stroke-width="2" opacity="0.98" rx="5" ry="5"/>
   <rect x="50" y="85" width="50" height="30" fill="none" stroke="#32CD32" stroke-width="1" rx="3" ry="3"/>
-  <text x="75" y="93" text-anchor="middle" font-family="Arial" font-size="7" font-weight="bold" fill="#006400">EPIC</text>
-  <text x="75" y="102" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#006400">ROD</text>
-  <text x="75" y="111" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#006400">BUFF</text>
-  <text x="75" y="117" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#32CD32">70%</text>
+  
+  <!-- Fishing rod icon in label -->
+  <line x1="68" y1="92" x2="68" y2="102" stroke="#006400" stroke-width="2"/>
+  <circle cx="68" cy="90" r="1.5" fill="#006400"/>
+  <path d="M 68 102 Q 73 103 75 98" stroke="#006400" stroke-width="1" fill="none"/>
+  
+  <!-- Percentage text -->
+  <text x="75" y="108" text-anchor="middle" font-family="Arial" font-size="6" font-weight="bold" fill="#006400">70%</text>
   
   <!-- Master power bubbles -->
   <circle cx="60" cy="75" r="5" fill="#FFD700" opacity="0.9" stroke="#32CD32" stroke-width="2"/>

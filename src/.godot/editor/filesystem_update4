@@ -1,6 +1,14 @@
 res://Scenes/Main/Main.tscn
 res://Scenes/Play/PlayerStatsMenu.tscn
+res://Entities/Fish/Fish.gd
+res://Scenes/Shop/Shop.tscn
+res://Scenes/Play/HUD.tscn
+res://Scenes/Play/LevelCompletionScreen.tscn
+res://Scenes/Play/QuestUI.tscn
 res://Common/GlobalVariable.gd
 res://Entities/Rod/Rod.gd
 res://Scenes/Play/HUD.gd
-res://Entities/Fish/Fish.gd
+res://Scenes/Play/LevelCompletionScreen.gd
+res://Scenes/Play/Play.gd
+res://Scenes/Play/PlayerStatsMenu.gd
+res://Scenes/Play/QuestUI.gd
