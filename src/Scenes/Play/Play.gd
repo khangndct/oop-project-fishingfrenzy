@@ -218,6 +218,11 @@ func _on_finish_game_pressed():
 	"""Handle finish game button press (early exit)"""
 	print("Finish game button pressed, showing confirmation dialog")
 	
+	# Safety check - ensure node is still in tree
+	if not is_inside_tree():
+		print("Node is not in tree, cannot show confirmation dialog")
+		return
+	
 	# Close other dialogs first
 	if ui_state.stats_open:
 		_close_stats_menu()
@@ -234,7 +239,8 @@ func _on_confirm_finish_game():
 	"""Handle confirmed finish game action"""
 	print("Finish game confirmed by user")
 	_close_confirmation_dialog()
-	# Keep game paused, let level completion screen handle it
+	
+	# Show level completion screen (game is finished early, so not completed)
 	_show_level_completion(false)
 
 func _on_cancel_finish_game():
@@ -244,8 +250,10 @@ func _on_cancel_finish_game():
 
 func _close_confirmation_dialog():
 	"""Close confirmation dialog and update state"""
-	# Unpause the game
-	get_tree().paused = false
+	# Safety check - ensure node is still in tree
+	if is_inside_tree():
+		# Unpause the game
+		get_tree().paused = false
 	ui_state.confirmation_open = false
 
 func _show_level_completion(completed: bool):

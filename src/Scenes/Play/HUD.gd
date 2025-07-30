@@ -26,8 +26,7 @@ func _ready():
 	
 	# Connect buttons
 	if back_button:
-		back_button.pressed.connect(_on_back_button_pressed)
-    back_button.text = "Finish Game"  # Change text
+		back_button.text = "Finish Game"  # Change text
 		back_button.pressed.connect(_on_finish_game_pressed)
 		# Prevent button from keeping focus after click
 		back_button.focus_mode = Control.FOCUS_NONE
@@ -35,7 +34,7 @@ func _ready():
 	# Connect catch popup signal
 	if fish_catch_popup:
 		fish_catch_popup.popup_closed.connect(_on_fish_catch_popup_closed)
-    
+	
 	if quest_button:
 		quest_button.pressed.connect(_on_quest_button_pressed)
 		# Prevent button from keeping focus after click
@@ -56,11 +55,13 @@ func _on_quest_button_pressed():
 
 func _on_finish_game_pressed():
 	"""Handle finish game button press (early exit from level)"""
+	print("Finish game button pressed, emitting signal to Play.gd")
 	finish_game_pressed.emit()
 
 func _on_back_button_pressed():
-	# This function is kept for compatibility but renamed functionality
-  
+	"""This function handles the actual scene change when game is finished"""
+	print("Finishing game and returning to main menu")
+	
 	# Reset potions when back to main (consumed after session)
 	if GlobalVariable.has_slow_potion:
 		GlobalVariable.has_slow_potion = false
@@ -77,7 +78,6 @@ func _on_back_button_pressed():
 	game_ended.emit()
 	# Go back to main menu
 	get_tree().change_scene_to_file("res://Scenes/Main/Main.tscn")
-	#_on_finish_game_pressed()
 
 func show_fish_catch_popup(fish_data: FishData):
 	"""Show the congratulations popup for a caught fish"""

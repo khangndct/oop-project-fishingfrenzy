@@ -136,8 +136,8 @@ func _physics_process(delta):
 				# Award money
 				var money_earned = fish_ref.fish_data.get_stat("value")
 				GlobalVariable.money += money_earned
-        GlobalVariable.current_session_money_earned += money_earned
-        # Update energy food counters
+				GlobalVariable.current_session_money_earned += money_earned
+				# Update energy food counters
 				GlobalVariable.on_fish_caught()
 				# Track fish for quest system
 				GlobalVariable.track_fish_caught(fish_ref.fish_data.rarity)
