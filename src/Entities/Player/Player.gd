@@ -141,22 +141,34 @@ func restore_energy(amount: int):
 
 # Stat effect getters
 func get_pull_strength() -> float:
-	"""Return pull strength multiplier based on strength stat"""
-	return 1.0 + (strength - 1) * 0.25  # +25% pull strength per strength point
+	"""Return pull strength multiplier based on strength stat and map effects"""
+	var base_strength = 1.0 + (strength - 1) * 0.25  # +25% pull strength per strength point
+	var map_modifier = GlobalVariable.get_map_player_pull_strength_modifier()
+	
+	return base_strength * map_modifier
 
 func get_rod_speed_multiplier() -> float:
 	"""Return rod animation speed multiplier based on speed stat"""
 	return 1.0 + (speed_stat - 1) * 0.15  # +15% rod speed per speed stat point
 
 func get_energy_cost() -> int:
-	"""Return actual energy cost based on vitality and energy food effects"""
+	"""Return actual energy cost based on vitality, energy food effects, and map effects"""
 	var base_cost = max(1, energy_cost_per_fish)
 	var food_cost = GlobalVariable.get_energy_cost_modifier()
-	return min(base_cost, food_cost)  # Use the lower cost
+	var base_modified_cost = min(base_cost, food_cost)  # Use the lower cost from food
+	
+	# Apply map energy cost modifier
+	var map_modifier = GlobalVariable.get_map_player_energy_cost_modifier()
+	var final_cost = int(base_modified_cost * map_modifier)
+	
+	return max(1, final_cost)  # Ensure at least 1 energy cost
 
 func get_luck_bonus() -> float:
-	"""Return luck bonus for rare fish spawning and special ability resistance"""
-	return (luck - 1) * 0.1  # +10% bonus per luck point
+	"""Return luck bonus for rare fish spawning and special ability resistance with map effects"""
+	var base_luck = (luck - 1) * 0.1  # +10% bonus per luck point
+	var map_luck = GlobalVariable.get_map_player_luck_bonus()
+	
+	return base_luck + map_luck
 
 # Fish interaction methods based on player stats
 func get_fish_catch_difficulty_modifier() -> float:
@@ -174,8 +186,11 @@ func get_fish_ability_resistance() -> float:
 	return (luck - 1) * 0.08  # +8% resistance per luck point
 
 func get_rare_fish_spawn_bonus() -> float:
-	"""Return bonus chance for rare fish spawning based on luck"""
-	return (luck - 1) * 0.12  # +12% rare fish spawn chance per luck point
+	"""Return bonus chance for rare fish spawning based on luck and map effects"""
+	var base_bonus = (luck - 1) * 0.12  # +12% rare fish spawn chance per luck point
+	var map_modifier = GlobalVariable.get_map_rare_fish_spawn_modifier()
+	
+	return base_bonus * map_modifier
 
 func get_fish_slow_effect_on_catch() -> float:
 	"""Return fish speed reduction when being caught based on strength"""
@@ -184,7 +199,7 @@ func get_fish_slow_effect_on_catch() -> float:
 func _physics_process(_delta):
 	var screen_size = get_viewport_rect().size
 	
-	# Calculate current speed with stat bonuses and potion effects
+	# Calculate current speed with stat bonuses, potion effects, and map effects
 	var current_speed = speed
 	
 	# Apply speed stat bonus (affects movement speed slightly)
@@ -196,6 +211,10 @@ func _physics_process(_delta):
 		current_speed = int(current_speed * (1.0 + potion_speed_bonus))
 	elif GlobalVariable.has_speed_potion:
 		current_speed = int(current_speed * 1.2)  # 20% speed increase (legacy)
+	
+	# Apply map movement speed modifier
+	var map_speed_modifier = GlobalVariable.get_map_player_movement_speed_modifier()
+	current_speed = int(current_speed * map_speed_modifier)
 	
 	match player_state:
 		State.IDLE:

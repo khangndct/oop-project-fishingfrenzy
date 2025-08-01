@@ -6,6 +6,9 @@ extends Node2D
 @onready var quest_ui = $UILayer/QuestUI
 @onready var level_completion_screen = $UILayer/LevelCompletionScreen
 
+# Map controller
+var map_controller: Map
+
 # Add confirmation dialog
 var confirmation_dialog: ConfirmationDialog
 
@@ -17,8 +20,14 @@ var ui_state = {
 }
 
 func _ready():
+	# Add to play_scene group for easier access by other nodes
+	add_to_group("play_scene")
+	
 	# Show active potions at start of fishing session
 	_show_active_potions()
+	
+	# Initialize map controller
+	_setup_map_controller()
 	
 	# Connect HUD signal
 	if hud:
@@ -39,6 +48,40 @@ func _setup_quest_system():
 	"""Setup quest UI and level tracking"""
 	if level_completion_screen:
 		level_completion_screen.visible = false
+
+func _setup_map_controller():
+	"""Setup map controller for dynamic backgrounds"""
+	# Hide or remove the static background sprite from the scene
+	var static_background = $Background
+	if static_background:
+		static_background.visible = false
+		print("Static background hidden - map controller will handle backgrounds")
+	
+	map_controller = preload("res://Scenes/Play/Map.gd").new()
+	map_controller.name = "MapController"
+	
+	# Configure map settings based on game state
+	map_controller.map_change_interval = 120.0  # 2 minutes between potential changes
+	map_controller.enable_random_changes = false  # Disable automatic changes - only change when entering play stage
+	
+	# Connect map signals
+	map_controller.map_changed.connect(_on_map_changed)
+	map_controller.map_loaded.connect(_on_map_loaded)
+	
+	# Add to scene (as first child so it renders behind everything)
+	add_child(map_controller)
+	move_child(map_controller, 0)
+	
+	# Register with GlobalVariable for global access
+	GlobalVariable.set_map_controller_ref(map_controller)
+	
+	print("Map controller initialized and added to scene")
+	
+	# Trigger initial map change when entering play stage
+	await get_tree().process_frame  # Wait one frame for setup to complete
+	if map_controller:
+		print("🎮 Triggering initial map change for play stage entry")
+		map_controller.force_map_change()
 
 func _setup_confirmation_dialog():
 	"""Setup confirmation dialog for finish game"""
@@ -94,6 +137,12 @@ func _show_active_potions():
 func _exit_tree():
 	# Don't reset potions - they should persist across sessions
 	# User needs to go to shop to buy new potions when they want effects
+	
+	# Clean up map controller
+	if map_controller:
+		map_controller.enable_automatic_changes(false)
+		print("Map controller cleaned up")
+	
 	pass
 
 func _reset_potions():
@@ -210,9 +259,97 @@ func _on_fish_caught(fish_data: FishData):
 	# Track fish for quest system
 	GlobalVariable.track_fish_caught(fish_data.rarity)
 	
+	# Randomly trigger map change on special fish catches
+	if fish_data.rarity in ["Epic", "Legendary"]:
+		var change_chance = randf()
+		if change_chance < 0.15:  # 15% chance for rare fish to trigger map change
+			print("Rare fish " + str(fish_data.rarity) + " triggered map change!")
+			if map_controller:
+				map_controller.force_map_change()
+	
 	# Check if level is completed
 	if GlobalVariable.is_level_completed():
 		_show_level_completion(true)
+
+# Map event handlers
+func _on_map_changed(map_name: String):
+	"""Handle map change events"""
+	print("Current map changed to: " + map_name)
+	
+	# Update global map effects cache
+	GlobalVariable.update_current_map_effects()
+	
+	# Show map change notification
+	_show_map_change_notification(map_name)
+
+func _on_map_loaded(map_texture: Texture2D):
+	"""Handle map texture loaded events"""
+	print("New map texture loaded successfully")
+	
+	# Update global map effects cache
+	GlobalVariable.update_current_map_effects()
+	
+	# Could trigger visual effects or adjust lighting here
+
+func _show_map_change_notification(map_name: String):
+	"""Show a brief notification when map changes"""
+	print("Map Environment: " + map_name)
+	
+	# Get current map effects for display
+	var effects = GlobalVariable.get_current_map_effects_summary()
+	if effects.has("player_effects"):
+		var player_effects = effects.player_effects
+		print("Player Effects:")
+		if player_effects.movement_speed_modifier != 1.0:
+			var change = (player_effects.movement_speed_modifier - 1.0) * 100
+			print("  Movement Speed: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
+		if player_effects.energy_cost_modifier != 1.0:
+			var change = (1.0 - player_effects.energy_cost_modifier) * 100
+			print("  Energy Efficiency: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
+		if player_effects.pull_strength_modifier != 1.0:
+			var change = (player_effects.pull_strength_modifier - 1.0) * 100
+			print("  Pull Strength: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
+	
+	if effects.has("fish_effects"):
+		var fish_effects = effects.fish_effects
+		print("Fish Behavior:")
+		if fish_effects.speed_modifier != 1.0:
+			var change = (fish_effects.speed_modifier - 1.0) * 100
+			print("  Fish Speed: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
+		if fish_effects.escape_chance_modifier != 1.0:
+			var change = (fish_effects.escape_chance_modifier - 1.0) * 100
+			print("  Escape Chance: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
+
+# Map control functions for external use
+func get_current_map_info() -> Dictionary:
+	"""Get current map information"""
+	if map_controller:
+		return map_controller.get_current_map_info()
+	return {}
+
+func force_map_change():
+	"""Force an immediate map change"""
+	if map_controller:
+		return map_controller.force_map_change()
+	return false
+
+func set_map_change_enabled(enabled: bool):
+	"""Enable or disable automatic map changes"""
+	if map_controller:
+		map_controller.enable_automatic_changes(enabled)
+
+func adjust_map_probabilities_for_level():
+	"""Adjust map probabilities based on current level/progress"""
+	if not map_controller:
+		return
+	
+	# Example: Adjust based on player stats or level progression
+	var player_level = 1
+	if GlobalVariable.has("player_level"):
+		player_level = GlobalVariable.player_level
+	
+	if map_controller.has_method("_on_player_level_changed"):
+		map_controller._on_player_level_changed(player_level)
 
 func _on_finish_game_pressed():
 	"""Handle finish game button press (early exit)"""
@@ -285,6 +422,15 @@ func _input(event):
 		# Prevent other handlers from processing this event if we handled it
 		if handled:
 			get_viewport().set_input_as_handled()
+	
+	# DEBUG: Add manual map change trigger with M key ONLY
+	if event is InputEventKey and event.pressed and event.keycode == KEY_M:
+		print("DEBUG: Manual map change triggered!")
+		if map_controller:
+			var result = map_controller.force_map_change()
+			print("Force map change result: " + str(result))
+		else:
+			print("ERROR: map_controller is null!")
 	
 	# Prevent space bar from triggering UI buttons when they're not supposed to
 	if event.is_action_pressed("spaceBar") or event.is_action_pressed("ui_accept"):

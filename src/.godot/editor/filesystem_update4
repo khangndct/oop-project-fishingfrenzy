@@ -1,7 +1,3 @@
-res://Scenes/Play/PlayerStatsMenu.tscn
-res://Entities/Rod/Rod.gd
-res://Scenes/Play/HUD.gd
 res://Scenes/Main/Main.tscn
+res://Scenes/Play/Map.gd
 res://Scenes/Play/Play.gd
-res://Common/GlobalVariable.gd
-res://Scenes/Shop/Shop.gd

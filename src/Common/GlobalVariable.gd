@@ -7,6 +7,10 @@ var player_ref : Player = null
 var hud_ref : CanvasLayer = null
 var money : int = 0
 
+# Map controller reference for accessing map effects globally
+var map_controller_ref : Node = null
+var current_map_effects : Dictionary = {}
+
 # Player persistent stats
 var player_strength : int = 1
 var player_speed_stat : int = 1
@@ -432,3 +436,85 @@ func get_session_duration() -> float:
 	"""Get current session duration in seconds"""
 	var current_time = Time.get_time_dict_from_system()["second"] + Time.get_time_dict_from_system()["minute"] * 60 + Time.get_time_dict_from_system()["hour"] * 3600
 	return current_time - current_session_start_time
+
+# Map Effect System - Global Access Functions
+func set_map_controller_ref(controller):
+	"""Set reference to the map controller for global access"""
+	map_controller_ref = controller
+
+func update_current_map_effects():
+	"""Update cached map effects from map controller"""
+	if map_controller_ref and map_controller_ref.has_method("get_all_current_map_effects"):
+		current_map_effects = map_controller_ref.get_all_current_map_effects()
+	else:
+		current_map_effects = {}
+
+func get_map_player_movement_speed_modifier() -> float:
+	"""Get player movement speed modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_player_movement_speed_modifier"):
+		return map_controller_ref.get_player_movement_speed_modifier()
+	return 1.0
+
+func get_map_player_energy_cost_modifier() -> float:
+	"""Get player energy cost modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_player_energy_cost_modifier"):
+		return map_controller_ref.get_player_energy_cost_modifier()
+	return 1.0
+
+func get_map_player_pull_strength_modifier() -> float:
+	"""Get player pull strength modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_player_pull_strength_modifier"):
+		return map_controller_ref.get_player_pull_strength_modifier()
+	return 1.0
+
+func get_map_player_luck_bonus() -> float:
+	"""Get player luck bonus from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_player_luck_bonus_modifier"):
+		return map_controller_ref.get_player_luck_bonus_modifier()
+	return 0.0
+
+func get_map_fish_speed_modifier() -> float:
+	"""Get fish speed modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_fish_speed_modifier"):
+		return map_controller_ref.get_fish_speed_modifier()
+	return 1.0
+
+func get_map_fish_escape_chance_modifier() -> float:
+	"""Get fish escape chance modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_fish_escape_chance_modifier"):
+		return map_controller_ref.get_fish_escape_chance_modifier()
+	return 1.0
+
+func get_map_fish_ability_power_modifier() -> float:
+	"""Get fish ability power modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_fish_ability_power_modifier"):
+		return map_controller_ref.get_fish_ability_power_modifier()
+	return 1.0
+
+func get_map_rare_fish_spawn_modifier() -> float:
+	"""Get rare fish spawn modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_rare_fish_spawn_modifier"):
+		return map_controller_ref.get_rare_fish_spawn_modifier()
+	return 1.0
+
+func get_map_legendary_fish_spawn_modifier() -> float:
+	"""Get legendary fish spawn modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_legendary_fish_spawn_modifier"):
+		return map_controller_ref.get_legendary_fish_spawn_modifier()
+	return 1.0
+
+func get_map_common_fish_spawn_modifier() -> float:
+	"""Get common fish spawn modifier from current map"""
+	if map_controller_ref and map_controller_ref.has_method("get_common_fish_spawn_modifier"):
+		return map_controller_ref.get_common_fish_spawn_modifier()
+	return 1.0
+
+func get_current_map_name() -> String:
+	"""Get current map display name"""
+	if current_map_effects.has("display_name"):
+		return current_map_effects.display_name
+	return "Unknown"
+
+func get_current_map_effects_summary() -> Dictionary:
+	"""Get summary of all current map effects"""
+	return current_map_effects
