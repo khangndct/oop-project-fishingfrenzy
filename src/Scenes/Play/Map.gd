@@ -31,7 +31,7 @@ var map_configs = {
 		}
 	},
 	"coral_reef": {
-		"path": "res://Scenes/Play/img/coral reef.png",  # Using your actual file
+		"path": "res://Scenes/Play/img/coral_reef.png",  # Using your actual file
 		"probability": 0.3,  # 30% chance (increased from 25%)
 		"name": "Coral Reef",
 		"description": "Vibrant coral formations teeming with life",
@@ -250,7 +250,7 @@ func _create_placeholder_texture(path: String) -> Texture2D:
 	var color: Color
 	if path.contains("background"):
 		color = Color(0.3, 0.6, 0.9)  # Medium blue (original style)
-	elif path.contains("coral_reef") or path.contains("coral reef"):
+	elif path.contains("coral_reef"):
 		color = Color(0.2, 0.8, 0.8)  # Turquoise
 	elif path.contains("deep_ocean") or path.contains("deep_sea"):
 		color = Color(0.1, 0.1, 0.5)  # Dark blue

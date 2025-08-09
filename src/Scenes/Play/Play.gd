@@ -77,11 +77,11 @@ func _setup_map_controller():
 	
 	print("Map controller initialized and added to scene")
 	
-	# Trigger initial map change when entering play stage
-	await get_tree().process_frame  # Wait one frame for setup to complete
-	if map_controller:
-		print("🎮 Triggering initial map change for play stage entry")
-		map_controller.force_map_change()
+		# Do not trigger initial map change when entering play stage
+		# await get_tree().process_frame  # Wait one frame for setup to complete
+		# if map_controller:
+		#     print("🎮 Triggering initial map change for play stage entry")
+		#     map_controller.force_map_change()
 
 func _setup_confirmation_dialog():
 	"""Setup confirmation dialog for finish game"""
