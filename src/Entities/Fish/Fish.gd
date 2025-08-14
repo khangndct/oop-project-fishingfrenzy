@@ -39,26 +39,10 @@ func _ready():
 		
 		# Setup UI notification system
 		_setup_notification_ui()
-		
-		# Log fish information with new methods
-		print("🐟 Fish ready: ", fish_data.fish_name)
-		print("   Rarity: ", fish_data.rarity, " (", typeof(fish_data.rarity), ")")
-		print("   Movement pattern: ", fish_data.get_movement_pattern())
-		print("   Has special ability: ", fish_data.has_special_ability())
-		if fish_data.has_special_ability():
-			print("   Special ability: ", fish_data.get_special_ability())
-			print("   Ability cooldown: ", fish_data.get_ability_cooldown(), "s")
-			print("   Ability duration: ", fish_data.get_ability_duration(), "s")
-		print("   Catch difficulty: ", fish_data.get_catch_difficulty())
-		
-		# Removed spawn notification - only show when caught
 
 func _setup_special_abilities():
 	if not fish_data.has_special_ability():
-		print("❌ Fish ", fish_data.fish_name, " has no special ability")
 		return
-	
-	print("⚙️ Setting up special abilities for ", fish_data.fish_name)
 	
 	# Create ability duration timer
 	ability_timer = Timer.new()
@@ -78,7 +62,6 @@ func _setup_special_abilities():
 	ability_cooldown_timer.wait_time = 1.0  # 1 second initial delay
 	ability_cooldown_timer.start()
 	is_ability_on_cooldown = true
-	print("⏳ Initial cooldown started for ", fish_data.fish_name, " (1 second)")
 
 func _setup_notification_ui():
 	# Create notification label for displaying fish actions
@@ -315,12 +298,9 @@ func _handle_boundary_collision():
 	var screen_size = get_viewport_rect().size
 	var margin = 50.0
 	
-	print("🔄 ", fish_data.fish_name, " hit vertical boundary at position: ", position)
-	
 	# Only handle vertical bouncing - fish can exit horizontally
 	if position.y <= margin or position.y >= screen_size.y - margin:
 		velocity.y = -velocity.y  # Bounce vertically
-		print("   Bouncing vertically")
 	
 	# Add some randomness to prevent repetitive bouncing
 	var random_factor = 0.8 + randf() * 0.4  # 0.8 to 1.2 multiplier
@@ -351,8 +331,6 @@ func _perform_safe_teleport():
 	var new_pos = _get_safe_teleport_position()
 	position = new_pos
 	
-	print("✨ ", fish_data.fish_name, " teleported from ", old_pos, " to ", new_pos)
-	
 	# Show a brief teleport effect
 	_show_fish_notification("✨ TELEPORT!", Color.CYAN)
 
@@ -362,17 +340,10 @@ func _check_special_ability_usage():
 		return
 		
 	if not fish_data.has_special_ability():
-		# Only print this occasionally to avoid spam
-		if randf() < 0.001:  # Very rare debug message
-			print("🚫 ", fish_data.fish_name, " (rarity: ", fish_data.rarity, ") has no special ability")
 		return
 		
 	if is_ability_active or is_ability_on_cooldown:
-		if randf() < 0.01:  # Occasional debug message
-			print("⏳ ", fish_data.fish_name, " ability blocked - Active: ", is_ability_active, " Cooldown: ", is_ability_on_cooldown)
 		return
-	
-	print("🎯 ", fish_data.fish_name, " ready to use ability: ", fish_data.get_special_ability())
 	
 	# Calculate ability activation chance based on player stats
 	var base_chance = 0.05  # 5% base chance per frame
@@ -381,7 +352,6 @@ func _check_special_ability_usage():
 	# Apply player's luck-based resistance to fish abilities
 	if GlobalVariable.player_ref:
 		player_resistance = GlobalVariable.player_ref.get_fish_ability_resistance()
-		print("🛡️ Player resistance to fish abilities: ", player_resistance * 100, "%")
 	
 	var final_chance = base_chance * (1.0 - player_resistance)
 	final_chance = max(0.01, final_chance)  # Minimum 1% chance
@@ -393,14 +363,12 @@ func _check_special_ability_usage():
 func _activate_special_ability():
 	# Enhanced null checking
 	if not fish_data or not is_instance_valid(fish_data):
-		print("⚠️ Cannot activate ability: fish_data is null or invalid")
 		return
 		
 	if is_ability_active or is_ability_on_cooldown:
 		return
 	
 	var ability_name = fish_data.get_special_ability()
-	print("🔥 ", fish_data.fish_name, " activating special ability: ", ability_name)
 	
 	# Show notification based on ability type
 	match ability_name:
@@ -426,7 +394,6 @@ func _on_ability_ended():
 		return
 	
 	var ability_name = fish_data.get_special_ability()
-	print("⏰ ", fish_data.fish_name, " special ability ended")
 	
 	# Show ability ended notification
 	_show_fish_notification("⏰ " + ability_name + " ended", Color.GRAY)
@@ -446,10 +413,7 @@ func _on_ability_ended():
 func _on_ability_cooldown_ended():
 	is_ability_on_cooldown = false
 	if fish_data:
-		print("✅ ", fish_data.fish_name, " special ability ready!")
 		_show_fish_notification("✅ Ready!", Color.GREEN)
-	else:
-		print("⚠️ Cooldown ended but fish_data is null")
 
 # Public method to force ability activation (for testing or special events)
 func force_activate_ability():
@@ -458,7 +422,6 @@ func force_activate_ability():
 		_activate_special_ability()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	print("fish deleted: ", fish_data.fish_name if fish_data else "unknown fish")
 	_cleanup_special_abilities()
 	queue_free()
 
@@ -498,7 +461,6 @@ func _on_fish_area_area_entered(area: Area2D) -> void:
 	if area.is_in_group("hook") and not GlobalVariable.is_fish_being_caught:
 		# Check if fish can escape due to special ability
 		if _can_escape_due_to_ability():
-			print("💨 ", fish_data.fish_name, " escapes using special ability!")
 			_show_fish_notification("💨 ESCAPED!", Color.ORANGE)
 			_escape_with_ability()
 			return
@@ -529,12 +491,10 @@ func _can_escape_due_to_ability() -> bool:
 	var player_escape_modifier = 1.0
 	if GlobalVariable.player_ref:
 		player_escape_modifier = GlobalVariable.player_ref.get_fish_escape_chance_modifier()
-		print("🎣 Player escape modifier: ", player_escape_modifier, " (lower is better)")
 	
 	var final_escape_chance = base_escape_chance * player_escape_modifier
 	final_escape_chance = max(0.05, final_escape_chance)  # Minimum 5% escape chance
 	
-	print("🏃 ", fish_data.fish_name, " escape chance: ", final_escape_chance * 100, "%")
 	return randf() < final_escape_chance
 
 func _escape_with_ability():

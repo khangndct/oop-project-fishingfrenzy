@@ -423,12 +423,10 @@ func _input(event):
 		if handled:
 			get_viewport().set_input_as_handled()
 	
-	# DEBUG: Add manual map change trigger with M key ONLY
+	# Force an immediate map change for play stage entry - removed to prevent excessive map changes
 	if event is InputEventKey and event.pressed and event.keycode == KEY_M:
-		print("DEBUG: Manual map change triggered!")
 		if map_controller:
 			var result = map_controller.force_map_change()
-			print("Force map change result: " + str(result))
 		else:
 			print("ERROR: map_controller is null!")
 	

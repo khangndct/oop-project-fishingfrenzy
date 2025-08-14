@@ -114,8 +114,6 @@ var transition_duration: float = 1.5
 var fade_tween: Tween
 
 func _ready():
-	print("Map controller initialized")
-	
 	# Setup background sprite
 	_setup_background_sprite()
 	
@@ -359,24 +357,11 @@ func change_to_random_map():
 	print("🎯 Changing from '" + current_map + "' to '" + selected_map + "'")
 	return load_map(selected_map, true)
 
-func debug_map_status():
-	"""Print current map system status for debugging"""
-	print("🐠 === MAP SYSTEM DEBUG STATUS ===")
-	print("Current map: " + str(current_map))
-	print("Is transitioning: " + str(is_transitioning))
-	print("Timer active: " + str(map_timer.is_connected("timeout", Callable(self, "_on_map_timer_timeout"))))
-	print("Timer time left: " + str(map_timer.time_left))
-	print("Timer wait time: " + str(map_timer.wait_time))
-	print("Timer paused: " + str(map_timer.paused))
-	print("===================================")
-
 func force_map_change():
 	"""Force an immediate map change (for external triggers)"""
-	print("🔄 Force map change requested - Current transition state: " + str(is_transitioning))
 	
 	# If stuck in transition, reset the state
 	if is_transitioning:
-		print("⚠️ Warning: Transition was stuck, resetting state")
 		is_transitioning = false
 		
 		# Kill any active tween
@@ -691,8 +676,4 @@ func _input(event):
 	"""Handle debug input"""
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_M:
-			print("🔄 Manual map change triggered by M key")
 			var result = force_map_change()
-			print("🔄 Force map change result: " + str(result))
-		elif event.keycode == KEY_I:
-			debug_map_status()

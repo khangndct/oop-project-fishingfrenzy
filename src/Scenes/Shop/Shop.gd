@@ -144,9 +144,6 @@ func _ready():
 	# Load game data to ensure sync
 	save_manager.load_game()
 	
-	# Debug: Print current potion status
-	print("Shop loaded - Slow potion: ", GlobalVariable.has_slow_potion, " Speed potion: ", GlobalVariable.has_speed_potion)
-	
 	# Initialize money tracking
 	last_money_amount = GlobalVariable.money
 	

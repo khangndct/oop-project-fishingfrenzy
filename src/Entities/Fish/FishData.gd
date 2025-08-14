@@ -65,14 +65,12 @@ class EpicBehavior extends FishBehaviorStrategy:
 		# Dash ability: temporarily increase speed
 		var original_speed = fish.velocity.length()
 		fish.velocity = fish.velocity.normalized() * (original_speed * 2.5)
-		print("⚡ Epic fish uses DASH! Speed boosted!")
 	
 	func remove_special_ability(fish: Fish) -> void:
 		# Restore normal speed
 		if fish.fish_data:
 			var normal_speed = fish.fish_data.get_effective_speed()
 			fish.velocity = fish.velocity.normalized() * normal_speed
-		print("⚡ Dash effect ended")
 
 class LegendaryBehavior extends FishBehaviorStrategy:
 	func get_movement_pattern() -> String:
@@ -106,15 +104,12 @@ class LegendaryBehavior extends FishBehaviorStrategy:
 			var new_x = randf_range(margin, screen_size.x - margin)
 			var new_y = randf_range(margin, screen_size.y - margin)
 			fish.position = Vector2(new_x, new_y)
-		
-		print("👻 Legendary fish uses INVISIBILITY and TELEPORTS!")
 	
 	func remove_special_ability(fish: Fish) -> void:
 		# Restore visibility
 		if fish.has_node("Sprite2D"):
 			var sprite = fish.get_node("Sprite2D")
 			sprite.modulate.a = 1.0  # Full opacity
-		print("👻 Invisibility effect ended")
 
 enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY}
 
@@ -180,13 +175,10 @@ func _initialize_behavior_strategy():
 			print("   → RareBehavior (no special ability)")
 		Rarity.EPIC:
 			behavior_strategy = EpicBehavior.new()
-			print("   → EpicBehavior (DASH ability)")
 		Rarity.LEGENDARY:
 			behavior_strategy = LegendaryBehavior.new()
-			print("   → LegendaryBehavior (INVISIBILITY ability)")
 		_:
 			behavior_strategy = CommonBehavior.new()
-			print("   → DEFAULT: CommonBehavior (rarity not recognized: ", rarity, ")")
 
 # Lazy initialization - call this when behavior_strategy is needed
 func get_behavior_strategy() -> FishBehaviorStrategy:
