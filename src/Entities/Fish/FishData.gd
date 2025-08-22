@@ -153,26 +153,19 @@ func _init():
 func _initialize_behavior_strategy():
 	# Ensure we have valid data before initializing
 	if fish_name == null or fish_name == "":
-		print("⚠️ Warning: fish_name not set, using default")
 		fish_name = "Unknown Fish"
 	
 	# Ensure rarity is valid
 	if rarity < 0 or rarity >= Rarity.size():
-		print("⚠️ Warning: Invalid rarity value ", rarity, ", defaulting to COMMON")
 		rarity = Rarity.COMMON
-	
-	print("🔧 Initializing behavior for ", fish_name, " with rarity: ", rarity, " (", Rarity.keys()[rarity], ")")
 	
 	match rarity:
 		Rarity.COMMON:
 			behavior_strategy = CommonBehavior.new()
-			print("   → CommonBehavior (no special ability)")
 		Rarity.UNCOMMON:
 			behavior_strategy = UncommonBehavior.new()
-			print("   → UncommonBehavior (no special ability)")
 		Rarity.RARE:
 			behavior_strategy = RareBehavior.new()
-			print("   → RareBehavior (no special ability)")
 		Rarity.EPIC:
 			behavior_strategy = EpicBehavior.new()
 		Rarity.LEGENDARY:

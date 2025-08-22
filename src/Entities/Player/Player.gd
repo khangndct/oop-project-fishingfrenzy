@@ -83,7 +83,6 @@ func add_fractional_strength(amount: float):
 		strength += 1
 		fractional_strength -= 1.0
 		GlobalVariable.player_fractional_strength = fractional_strength
-		print("Strength increased to %d! (%.1f%% progress toward next level)" % [strength, fractional_strength * 100])
 
 func add_fractional_speed(amount: float):
 	"""Add fractional speed and convert to full points when >= 1.0"""
@@ -93,7 +92,6 @@ func add_fractional_speed(amount: float):
 		speed_stat += 1
 		fractional_speed -= 1.0
 		GlobalVariable.player_fractional_speed = fractional_speed
-		print("Speed increased to %d! (%.1f%% progress toward next level)" % [speed_stat, fractional_speed * 100])
 
 func add_fractional_vitality(amount: float):
 	"""Add fractional vitality and convert to full points when >= 1.0"""
@@ -103,7 +101,6 @@ func add_fractional_vitality(amount: float):
 		vitality += 1
 		fractional_vitality -= 1.0
 		GlobalVariable.player_fractional_vitality = fractional_vitality
-		print("Vitality increased to %d! (%.1f%% progress toward next level)" % [vitality, fractional_vitality * 100])
 
 func add_fractional_luck(amount: float):
 	"""Add fractional luck and convert to full points when >= 1.0"""
@@ -113,7 +110,6 @@ func add_fractional_luck(amount: float):
 		luck += 1
 		fractional_luck -= 1.0
 		GlobalVariable.player_fractional_luck = fractional_luck
-		print("Luck increased to %d! (%.1f%% progress toward next level)" % [luck, fractional_luck * 100])
 
 func get_fractional_strength_progress() -> float:
 	"""Return progress toward next strength point (0.0 to 1.0)"""
@@ -134,7 +130,7 @@ func get_fractional_luck_progress() -> float:
 func reduce_energy_for_fish():
 	energy -= get_energy_cost()
 	if energy <= 0:
-		print("Player is exhausted!")
+		pass  # Player is exhausted
 
 func restore_energy(amount: int):
 	energy += amount

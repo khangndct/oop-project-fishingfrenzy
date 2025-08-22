@@ -4,6 +4,7 @@ extends Node2D
 @onready var player_stats_menu = $HUD/PlayerStatsMenu
 @onready var stats_button = $HUD/StatsButton
 @onready var quest_ui = $UILayer/QuestUI
+@onready var inventory_ui = $UILayer/InventoryUI
 @onready var level_completion_screen = $UILayer/LevelCompletionScreen
 
 # Map controller
@@ -16,6 +17,7 @@ var confirmation_dialog: ConfirmationDialog
 var ui_state = {
 	"quest_open": false,
 	"stats_open": false,
+	"inventory_open": false,
 	"confirmation_open": false
 }
 
@@ -23,8 +25,8 @@ func _ready():
 	# Add to play_scene group for easier access by other nodes
 	add_to_group("play_scene")
 	
-	# Show active potions at start of fishing session
-	_show_active_potions()
+	# Setup inventory manager FIRST (crucial for item effects)
+	_setup_inventory_manager()
 	
 	# Initialize map controller
 	_setup_map_controller()
@@ -33,6 +35,7 @@ func _ready():
 	if hud:
 		hud.game_ended.connect(_on_game_end)
 		hud.quest_button_pressed.connect(_on_quest_button_pressed)
+		hud.inventory_button_pressed.connect(_on_inventory_button_pressed)
 		hud.finish_game_pressed.connect(_on_finish_game_pressed)
 	
 	# Setup player stats menu
@@ -41,13 +44,38 @@ func _ready():
 	# Initialize quest system
 	_setup_quest_system()
 	
+	# Initialize inventory system
+	_setup_inventory_system()
+	
 	# Setup confirmation dialog
 	_setup_confirmation_dialog()
+
+func _setup_inventory_manager():
+	"""Setup inventory manager singleton"""
+	if not GlobalVariable.inventory_manager:
+		GlobalVariable.inventory_manager = InventoryManager.get_instance()
+		# Add to GlobalVariable (persistent) instead of current scene
+		GlobalVariable.add_child(GlobalVariable.inventory_manager)
+	else:
+		# Use existing instance - no need to add to current scene
+		
+		# Ensure it's properly attached to GlobalVariable
+		if not GlobalVariable.inventory_manager.get_parent():
+			GlobalVariable.add_child(GlobalVariable.inventory_manager)
 
 func _setup_quest_system():
 	"""Setup quest UI and level tracking"""
 	if level_completion_screen:
 		level_completion_screen.visible = false
+
+func _setup_inventory_system():
+	"""Setup inventory UI"""
+	if inventory_ui:
+		inventory_ui.hide()
+		# Connect close button if it exists
+		var close_button = inventory_ui.get_node_or_null("PanelContainer/VBoxContainer/CloseButton")
+		if close_button:
+			close_button.pressed.connect(_on_inventory_close_pressed)
 
 func _setup_map_controller():
 	"""Setup map controller for dynamic backgrounds"""
@@ -55,7 +83,6 @@ func _setup_map_controller():
 	var static_background = $Background
 	if static_background:
 		static_background.visible = false
-		print("Static background hidden - map controller will handle backgrounds")
 	
 	map_controller = preload("res://Scenes/Play/Map.gd").new()
 	map_controller.name = "MapController"
@@ -75,13 +102,11 @@ func _setup_map_controller():
 	# Register with GlobalVariable for global access
 	GlobalVariable.set_map_controller_ref(map_controller)
 	
-	print("Map controller initialized and added to scene")
-	
-		# Do not trigger initial map change when entering play stage
-		# await get_tree().process_frame  # Wait one frame for setup to complete
-		# if map_controller:
-		#     print("🎮 Triggering initial map change for play stage entry")
-		#     map_controller.force_map_change()
+	# Trigger initial map change when entering play stage
+	# await get_tree().process_frame  # Wait one frame for setup to complete
+	# if map_controller:
+	# 	print("🎮 Triggering initial map change for play stage entry")
+	# 	map_controller.force_map_change()
 
 func _setup_confirmation_dialog():
 	"""Setup confirmation dialog for finish game"""
@@ -103,37 +128,6 @@ func _setup_stats_menu():
 		# Prevent button from keeping focus after click
 		stats_button.focus_mode = Control.FOCUS_NONE
 
-func _show_active_potions():
-	# Check Fish Slow Potions (highest level takes priority)
-	if GlobalVariable.has_fish_slow_potion_70:
-		print("Fish Slow Potion 70% is active this session!")
-	elif GlobalVariable.has_fish_slow_potion_50:
-		print("Fish Slow Potion 50% is active this session!")
-	elif GlobalVariable.has_fish_slow_potion_30:
-		print("Fish Slow Potion 30% is active this session!")
-	
-	# Check Player Speed Potions (highest level takes priority)
-	if GlobalVariable.has_player_speed_potion_40:
-		print("Player Speed Potion 40% is active this session!")
-	elif GlobalVariable.has_player_speed_potion_30:
-		print("Player Speed Potion 30% is active this session!")
-	elif GlobalVariable.has_player_speed_potion_20:
-		print("Player Speed Potion 20% is active this session!")
-	
-	# Check Rod Buff Potions (highest level takes priority)
-	if GlobalVariable.has_rod_buff_potion_70:
-		print("Rod Buff Potion 70% is active this session!")
-	elif GlobalVariable.has_rod_buff_potion_50:
-		print("Rod Buff Potion 50% is active this session!")
-	elif GlobalVariable.has_rod_buff_potion_30:
-		print("Rod Buff Potion 30% is active this session!")
-	
-	# Legacy support
-	if GlobalVariable.has_slow_potion:
-		print("Legacy Slow Motion Potion is active this session!")
-	if GlobalVariable.has_speed_potion:
-		print("Legacy Speed Potion is active this session!")
-
 func _exit_tree():
 	# Don't reset potions - they should persist across sessions
 	# User needs to go to shop to buy new potions when they want effects
@@ -141,7 +135,6 @@ func _exit_tree():
 	# Clean up map controller
 	if map_controller:
 		map_controller.enable_automatic_changes(false)
-		print("Map controller cleaned up")
 	
 	pass
 
@@ -160,7 +153,6 @@ func _process(_delta):
 func _on_game_end():
 	# Reset potions when back to main (consumed after session)
 	_reset_potions()
-	print("Fishing session ended")
 
 # Helper functions to get potion effects
 func get_fish_slow_effect() -> float:
@@ -195,7 +187,6 @@ func has_any_player_speed_potion() -> bool:
 
 func _on_stats_button_pressed():
 	"""Handle stats button press - show player stats menu"""
-	print("Stats button pressed")
 	
 	# Close other dialogs first
 	if ui_state.quest_open:
@@ -204,15 +195,12 @@ func _on_stats_button_pressed():
 		_close_confirmation_dialog()
 	
 	if player_stats_menu:
-		print("PlayerStatsMenu exists, checking visibility")
 		if ui_state.stats_open:
-			print("Hiding menu")
 			_close_stats_menu()
 		else:
-			print("Showing menu")
 			_open_stats_menu()
 	else:
-		print("Warning: player_stats_menu is null!")
+		pass
 
 func _open_stats_menu():
 	"""Open stats menu and update state"""
@@ -226,23 +214,41 @@ func _close_stats_menu():
 
 func _on_quest_button_pressed():
 	"""Handle quest button press - show quest panel"""
-	print("Quest button pressed")
-	print("quest_ui exists: ", quest_ui != null)
 	
 	# Close other dialogs first
 	if ui_state.stats_open:
 		_close_stats_menu()
+	if ui_state.inventory_open:
+		_close_inventory_ui()
 	if ui_state.confirmation_open:
 		_close_confirmation_dialog()
 	
 	if quest_ui:
-		print("Calling toggle_quest_panel()")
 		if ui_state.quest_open:
 			_close_quest_ui()
 		else:
 			_open_quest_ui()
-	else:
-		print("Warning: quest_ui is null!")
+
+func _on_inventory_button_pressed():
+	"""Handle inventory button press - show inventory panel"""
+	
+	# Close other dialogs first
+	if ui_state.stats_open:
+		_close_stats_menu()
+	if ui_state.quest_open:
+		_close_quest_ui()
+	if ui_state.confirmation_open:
+		_close_confirmation_dialog()
+	
+	if inventory_ui:
+		if ui_state.inventory_open:
+			_close_inventory_ui()
+		else:
+			_open_inventory_ui()
+
+func _on_inventory_close_pressed():
+	"""Handle inventory close button press"""
+	_close_inventory_ui()
 
 func _open_quest_ui():
 	"""Open quest UI and update state"""
@@ -254,6 +260,16 @@ func _close_quest_ui():
 	quest_ui.hide_quest_panel()
 	ui_state.quest_open = false
 
+func _open_inventory_ui():
+	"""Open inventory UI and update state"""
+	inventory_ui.show_inventory()
+	ui_state.inventory_open = true
+
+func _close_inventory_ui():
+	"""Close inventory UI and update state"""
+	inventory_ui.hide_inventory()
+	ui_state.inventory_open = false
+
 func _on_fish_caught(fish_data: FishData):
 	"""Handle fish caught event for quest tracking"""
 	# Track fish for quest system
@@ -263,7 +279,6 @@ func _on_fish_caught(fish_data: FishData):
 	if fish_data.rarity in ["Epic", "Legendary"]:
 		var change_chance = randf()
 		if change_chance < 0.15:  # 15% chance for rare fish to trigger map change
-			print("Rare fish " + str(fish_data.rarity) + " triggered map change!")
 			if map_controller:
 				map_controller.force_map_change()
 	
@@ -274,7 +289,6 @@ func _on_fish_caught(fish_data: FishData):
 # Map event handlers
 func _on_map_changed(map_name: String):
 	"""Handle map change events"""
-	print("Current map changed to: " + map_name)
 	
 	# Update global map effects cache
 	GlobalVariable.update_current_map_effects()
@@ -282,9 +296,8 @@ func _on_map_changed(map_name: String):
 	# Show map change notification
 	_show_map_change_notification(map_name)
 
-func _on_map_loaded(map_texture: Texture2D):
+func _on_map_loaded(_map_texture: Texture2D):
 	"""Handle map texture loaded events"""
-	print("New map texture loaded successfully")
 	
 	# Update global map effects cache
 	GlobalVariable.update_current_map_effects()
@@ -293,32 +306,24 @@ func _on_map_loaded(map_texture: Texture2D):
 
 func _show_map_change_notification(map_name: String):
 	"""Show a brief notification when map changes"""
-	print("Map Environment: " + map_name)
 	
 	# Get current map effects for display
 	var effects = GlobalVariable.get_current_map_effects_summary()
 	if effects.has("player_effects"):
 		var player_effects = effects.player_effects
-		print("Player Effects:")
 		if player_effects.movement_speed_modifier != 1.0:
 			var change = (player_effects.movement_speed_modifier - 1.0) * 100
-			print("  Movement Speed: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
 		if player_effects.energy_cost_modifier != 1.0:
 			var change = (1.0 - player_effects.energy_cost_modifier) * 100
-			print("  Energy Efficiency: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
 		if player_effects.pull_strength_modifier != 1.0:
 			var change = (player_effects.pull_strength_modifier - 1.0) * 100
-			print("  Pull Strength: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
 	
 	if effects.has("fish_effects"):
 		var fish_effects = effects.fish_effects
-		print("Fish Behavior:")
 		if fish_effects.speed_modifier != 1.0:
 			var change = (fish_effects.speed_modifier - 1.0) * 100
-			print("  Fish Speed: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
 		if fish_effects.escape_chance_modifier != 1.0:
 			var change = (fish_effects.escape_chance_modifier - 1.0) * 100
-			print("  Escape Chance: " + ("+" if change >= 0 else "") + str(int(change)) + "%")
 
 # Map control functions for external use
 func get_current_map_info() -> Dictionary:
@@ -353,11 +358,9 @@ func adjust_map_probabilities_for_level():
 
 func _on_finish_game_pressed():
 	"""Handle finish game button press (early exit)"""
-	print("Finish game button pressed, showing confirmation dialog")
 	
 	# Safety check - ensure node is still in tree
 	if not is_inside_tree():
-		print("Node is not in tree, cannot show confirmation dialog")
 		return
 	
 	# Close other dialogs first
@@ -374,7 +377,6 @@ func _on_finish_game_pressed():
 
 func _on_confirm_finish_game():
 	"""Handle confirmed finish game action"""
-	print("Finish game confirmed by user")
 	_close_confirmation_dialog()
 	
 	# Show level completion screen (game is finished early, so not completed)
@@ -382,7 +384,6 @@ func _on_confirm_finish_game():
 
 func _on_cancel_finish_game():
 	"""Handle canceled finish game action"""
-	print("Finish game canceled by user")
 	_close_confirmation_dialog()
 
 func _close_confirmation_dialog():
@@ -414,6 +415,11 @@ func _input(event):
 			_close_quest_ui()
 			handled = true
 		
+		# Close inventory UI if open
+		if ui_state.inventory_open:
+			_close_inventory_ui()
+			handled = true
+		
 		# Close confirmation dialog if open
 		if ui_state.confirmation_open:
 			_close_confirmation_dialog()
@@ -423,12 +429,10 @@ func _input(event):
 		if handled:
 			get_viewport().set_input_as_handled()
 	
-	# Force an immediate map change for play stage entry - removed to prevent excessive map changes
+	# DEBUG: Add manual map change trigger with M key ONLY
 	if event is InputEventKey and event.pressed and event.keycode == KEY_M:
 		if map_controller:
 			var result = map_controller.force_map_change()
-		else:
-			print("ERROR: map_controller is null!")
 	
 	# Prevent space bar from triggering UI buttons when they're not supposed to
 	if event.is_action_pressed("spaceBar") or event.is_action_pressed("ui_accept"):

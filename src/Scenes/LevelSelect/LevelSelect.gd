@@ -6,10 +6,6 @@ extends Control
 @onready var back_button: Button = $BackButton
 
 func _ready():
-	print("LevelSelect _ready() called")
-	print("GlobalVariable.unlocked_levels: ", GlobalVariable.unlocked_levels)
-	print("GlobalVariable.level_completed: ", GlobalVariable.level_completed)
-	
 	setup_level_buttons()
 	
 	# Connect button signals
@@ -17,13 +13,9 @@ func _ready():
 	normal_button.pressed.connect(_on_normal_selected)
 	hard_button.pressed.connect(_on_hard_selected)
 	back_button.pressed.connect(_on_back_pressed)
-	print("LevelSelect setup completed successfully")
 
 func setup_level_buttons():
 	"""Setup level buttons based on unlocked levels"""
-	print("Setting up level buttons...")
-	print("unlocked_levels: ", GlobalVariable.unlocked_levels)
-	print("level_completed: ", GlobalVariable.level_completed)
 	
 	# Easy is always available
 	easy_button.disabled = false

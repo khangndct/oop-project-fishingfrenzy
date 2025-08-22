@@ -18,8 +18,6 @@ func _ready():
 		close_button.pressed.connect(_on_close_button_pressed)
 		# Prevent button from keeping focus after click
 		close_button.focus_mode = Control.FOCUS_NONE
-	else:
-		print("Warning: close_button not found in PlayerStatsMenu")
 	
 	# Load player picture
 	_load_player_picture()
@@ -30,10 +28,6 @@ func _load_player_picture():
 		var player_texture = load("res://Assets/Img/Player/Player.svg") as Texture2D
 		if player_texture:
 			player_picture.texture = player_texture
-		else:
-			print("Warning: Could not load player texture")
-	else:
-		print("Warning: player_picture not found in PlayerStatsMenu")
 
 func show_menu():
 	"""Display the player stats menu"""
@@ -50,7 +44,6 @@ func show_menu():
 				player_ref = player_node
 	
 	if not player_ref:
-		print("ERROR: PlayerStatsMenu: No player reference available!")
 		return
 	
 	_update_stats_display()

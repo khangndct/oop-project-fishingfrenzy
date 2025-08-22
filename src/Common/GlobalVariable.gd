@@ -1,5 +1,7 @@
 extends Node
 
+var inventory_manager = null
+
 var is_fish_being_caught := false
 var hook_ref : Node = null
 var rod_ref : Rod = null
@@ -88,8 +90,40 @@ var caught_fish_label : Label = null
 var caught_fish_timer : Timer = null
 
 func _ready():
+	_initialize_inventory_manager()
 	_setup_caught_fish_ui()
 
+func _initialize_inventory_manager():
+	"""Initialize the inventory manager singleton with migration support"""
+	if not inventory_manager:
+		# Use singleton pattern instead of creating new instance
+		inventory_manager = InventoryManager.get_instance()
+		add_child(inventory_manager)
+		
+		# Check if we need to migrate from old boolean system
+		_check_and_migrate_inventory()
+		
+		# Connect to signals for real-time updates (call deferred to ensure functions are loaded)
+		call_deferred("_connect_inventory_signals")
+	else:
+		pass
+func _check_and_migrate_inventory():
+	"""Check if we need to migrate from old boolean flags to new inventory system"""
+	# Check if any old boolean flags are true
+	var old_flags_exist = (
+		has_great_fortune_food or has_super_fortune_food or has_ultra_fortune_food or
+		has_recovery_energy_food or has_mighty_energy_food or has_grand_energy_food or
+		has_fish_slow_potion_30 or has_fish_slow_potion_50 or has_fish_slow_potion_70 or
+		has_player_speed_potion_20 or has_player_speed_potion_30 or has_player_speed_potion_40 or
+		has_rod_buff_potion_30 or has_rod_buff_potion_50 or has_rod_buff_potion_70 or
+		has_slow_potion or has_speed_potion
+	)
+	
+	if old_flags_exist:
+		print("Old save file detected. Migrating from boolean flags to inventory system...")
+		inventory_manager.migrate_from_boolean_flags()
+		print("Migration completed!")
+		
 func _setup_caught_fish_ui():
 	"""Setup UI elements for displaying caught fish information"""
 	if not caught_fish_ui:
@@ -305,14 +339,12 @@ func on_fish_caught():
 		if mighty_energy_fish_count >= 50:
 			has_mighty_energy_food = false
 			mighty_energy_fish_count = 0
-			print("Mighty Energy Food effect expired after 50 fish!")
 	
 	if has_grand_energy_food:
 		grand_energy_fish_count += 1
 		if grand_energy_fish_count >= 100:
 			has_grand_energy_food = false
 			grand_energy_fish_count = 0
-			print("Grand Energy Food effect expired after 100 fish!")
 
 # Level and Quest System Functions
 func start_level_session():
@@ -518,3 +550,29 @@ func get_current_map_name() -> String:
 func get_current_map_effects_summary() -> Dictionary:
 	"""Get summary of all current map effects"""
 	return current_map_effects
+
+func _connect_inventory_signals():
+	"""Connect to inventory manager signals for real-time updates"""
+	if inventory_manager:
+		# Connect to inventory signals if they exist
+		if inventory_manager.has_signal("effect_activated"):
+			inventory_manager.effect_activated.connect(_on_inventory_effect_activated)
+		if inventory_manager.has_signal("effect_expired"):
+			inventory_manager.effect_expired.connect(_on_inventory_effect_expired)
+		if inventory_manager.has_signal("energy_restored"):
+			inventory_manager.energy_restored.connect(_on_inventory_energy_restored)
+
+func _on_inventory_effect_activated(_item_type):
+	"""Handle when an inventory effect is activated"""
+	# This can be used for future inventory effect handling
+	pass
+
+func _on_inventory_effect_expired(_item_type):
+	"""Handle when an inventory effect expires"""
+	# This can be used for future inventory effect handling
+	pass
+
+func _on_inventory_energy_restored():
+	"""Handle when energy is restored via inventory"""
+	# This can be used for future inventory effect handling
+	pass

@@ -5,7 +5,6 @@ const SAVE_FILE_PATH = "res://save_game.save"
 func save_game():
 	var save_file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
 	if save_file == null:
-		print("Error: Could not open save file for writing")
 		return
 	
 	var save_data = {
@@ -45,18 +44,19 @@ func save_game():
 		"has_speed_potion": GlobalVariable.has_speed_potion
 	}
 	
+	# Add inventory manager data if it exists
+	if GlobalVariable.inventory_manager:
+		save_data["inventory_data"] = GlobalVariable.inventory_manager.save_data()
+	
 	save_file.store_string(JSON.stringify(save_data))
 	save_file.close()
-	print("Game saved successfully - Money: ", GlobalVariable.money)
 
 func load_game():
 	if not FileAccess.file_exists(SAVE_FILE_PATH):
-		print("No save file found, using default values")
 		return
 	
 	var save_file = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
 	if save_file == null:
-		print("Error: Could not open save file for reading")
 		return
 	
 	var save_string = save_file.get_as_text()
@@ -66,14 +66,12 @@ func load_game():
 	var parse_result = json.parse(save_string)
 	
 	if parse_result != OK:
-		print("Error: Could not parse save file")
 		return
 	
 	var save_data = json.data
 	
 	if save_data.has("money"):
 		GlobalVariable.money = save_data.money
-		print("Money loaded: ", GlobalVariable.money)
 	
 	# Load player stats
 	if save_data.has("player_strength"):
@@ -156,7 +154,12 @@ func load_game():
 	if save_data.has("has_speed_potion"):
 		GlobalVariable.has_speed_potion = save_data.has_speed_potion
 	
-	print("Game loaded successfully - Total money: ", GlobalVariable.money)
+	# Load inventory manager data
+	if save_data.has("inventory_data") and GlobalVariable.inventory_manager:
+		GlobalVariable.inventory_manager.load_data(save_data.inventory_data)
+	elif GlobalVariable.inventory_manager:
+		# If no inventory data but we have boolean flags, migrate them
+		GlobalVariable.inventory_manager.migrate_from_boolean_flags()
 
 func clear_data():
 	# Reset all global variables to default values
@@ -193,9 +196,10 @@ func clear_data():
 	GlobalVariable.has_slow_potion = false
 	GlobalVariable.has_speed_potion = false
 	
+	# Reset inventory manager
+	if GlobalVariable.inventory_manager:
+		GlobalVariable.inventory_manager._initialize_inventory()
+	
 	# Delete save file if it exists
 	if FileAccess.file_exists(SAVE_FILE_PATH):
 		DirAccess.remove_absolute(SAVE_FILE_PATH)
-		print("Save file deleted successfully")
-	
-	print("All game data cleared!")

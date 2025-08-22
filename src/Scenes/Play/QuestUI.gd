@@ -7,21 +7,15 @@ extends Control
 var is_quest_panel_visible = false
 
 func _ready():
-	print("QuestUI _ready called")
 	setup_quest_panel()
 	quest_panel.visible = false
 	if close_button:
 		close_button.pressed.connect(_on_close_quest_panel)
 		# Prevent button from keeping focus after click
 		close_button.focus_mode = Control.FOCUS_NONE
-	else:
-		print("Warning: close_button not found in QuestUI")
 
 func setup_quest_panel():
 	"""Setup quest panel with current level requirements"""
-	print("setup_quest_panel called")
-	print("quest_content exists: ", quest_content != null)
-	print("current_level: ", GlobalVariable.current_level)
 	
 	# Clear existing quest items
 	for child in quest_content.get_children():
@@ -126,12 +120,9 @@ func add_stat_item(stat_name: String, value):
 
 func show_quest_panel():
 	"""Show the quest panel"""
-	print("show_quest_panel called")
 	setup_quest_panel()  # Refresh content
-	print("Setting quest_panel.visible to true")
 	quest_panel.visible = true
 	is_quest_panel_visible = true
-	print("Quest panel should now be visible")
 
 func hide_quest_panel():
 	"""Hide the quest panel"""
@@ -150,8 +141,6 @@ func _on_close_quest_panel():
 
 func toggle_quest_panel():
 	"""Toggle quest panel visibility"""
-	print("toggle_quest_panel called, is_quest_panel_visible: ", is_quest_panel_visible)
-	print("quest_panel exists: ", quest_panel != null)
 	if is_quest_panel_visible:
 		hide_quest_panel()
 	else:

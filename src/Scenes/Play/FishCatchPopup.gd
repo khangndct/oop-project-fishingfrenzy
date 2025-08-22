@@ -39,18 +39,14 @@ func _input(event):
 
 func _on_close_timer_timeout():
 	can_close = true
-	print("💫 Popup can now be closed with SPACE")
 
 func show_catch_popup(fish_data: FishData):
 	if not fish_data:
-		print("⚠️ Warning: Cannot show popup - fish_data is null")
 		return
 	
 	# Set fish image
 	if fish_data.sprite_texture:
 		fish_image.texture = fish_data.sprite_texture
-	else:
-		print("⚠️ Warning: Fish has no sprite texture")
 	
 	# Set fish name
 	fish_name_label.text = fish_data.fish_name
@@ -78,9 +74,6 @@ func show_catch_popup(fish_data: FishData):
 	
 	# Pause the game
 	get_tree().paused = true
-	
-	print("🎉 Showing catch popup for: ", fish_data.fish_name, " (", rarity_name, ")")
-	print("⏰ Wait 0.5 seconds before you can close with SPACE")
 
 func close_popup():
 	# Hide the popup
@@ -91,5 +84,3 @@ func close_popup():
 	
 	# Emit signal to notify that popup was closed
 	popup_closed.emit()
-	
-	print("📱 Fish catch popup closed")

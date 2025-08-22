@@ -1,1 +1,7 @@
 res://Scenes/Main/Main.tscn
+res://Scenes/Play/Play.gd
+res://Scenes/Play/Map.gd
+res://Common/GlobalVariable.gd
+res://Scenes/Shop/Shop.gd
+res://Common/InventoryManager.gd
+res://Common/Utils/SaveManager.gd

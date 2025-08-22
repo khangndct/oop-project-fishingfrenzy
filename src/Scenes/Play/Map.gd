@@ -140,7 +140,6 @@ func _setup_background_sprite():
 	background_sprite.scale = Vector2(0.833333, 0.703125)
 	
 	add_child(background_sprite)
-	print("Background sprite created and added at position: " + str(background_sprite.position))
 
 func _setup_map_timer():
 	"""Setup timer for automatic map changes"""
@@ -152,28 +151,18 @@ func _setup_map_timer():
 	
 	if enable_random_changes:
 		map_timer.start()
-		print("Map change timer started with interval: " + str(map_change_interval) + "s")
-	else:
-		print("Map change timer created but not started (automatic changes disabled)")
 
 func _on_map_timer_timeout():
 	"""Handle automatic map change timer"""
-	print("⏰ Map timer timeout triggered! Checking for map change...")
 	if not enable_random_changes:
-		print("⏰ Timer timeout but random changes disabled - maps only change when entering play stage")
 		return
 		
 	if is_transitioning:
-		print("⏰ Timer timeout but transition in progress, skipping")
 		return
 		
 	var chance = randf()
-	print("⏰ Random chance: " + str(chance) + " (need < 0.3 to change)")
 	if chance < 0.3:  # 30% chance to change map on timer
-		print("⏰ Map change triggered by timer!")
 		change_to_random_map()
-	else:
-		print("⏰ No map change this time (chance too high)")
 
 func get_weighted_random_map() -> String:
 	"""Select a random map based on probability weights"""
@@ -194,29 +183,22 @@ func get_weighted_random_map() -> String:
 
 func _load_random_map():
 	"""Load a random map at game start"""
-	print("Loading initial random map...")
 	var selected_map = get_weighted_random_map()
-	print("Selected initial map: " + selected_map)
 	var result = load_map(selected_map)
-	print("Initial map load result: " + str(result))
 
 func load_map(map_key: String, use_transition: bool = false):
 	"""Load a specific map by key"""
 	if not map_configs.has(map_key):
-		print("Warning: Map '" + map_key + "' not found in configurations")
 		return false
 	
 	if is_transitioning:
-		print("Map transition already in progress, ignoring request")
 		return false
 	
 	var config = map_configs[map_key]
-	print("Loading map: " + config.name)
 	
 	# Try to load the texture
 	var texture = _load_map_texture(config.path)
 	if texture == null:
-		print("Failed to load map texture: " + config.path)
 		return false
 	
 	if use_transition and current_texture != null:
@@ -233,10 +215,8 @@ func _load_map_texture(path: String) -> Texture2D:
 		if resource is Texture2D:
 			return resource as Texture2D
 		else:
-			print("Resource at " + path + " is not a Texture2D")
 			return null
 	else:
-		print("Map texture not found at: " + path)
 		# For development: create a placeholder colored texture
 		return _create_placeholder_texture(path)
 
@@ -262,7 +242,6 @@ func _create_placeholder_texture(path: String) -> Texture2D:
 	var texture = ImageTexture.new()
 	texture.create_from_image(image)
 	
-	print("Created placeholder texture for: " + path)
 	return texture
 
 func _set_map_immediately(map_key: String, texture: Texture2D, config: Dictionary):
@@ -277,15 +256,10 @@ func _set_map_immediately(map_key: String, texture: Texture2D, config: Dictionar
 	# Emit signals
 	map_changed.emit(config.name)
 	map_loaded.emit(texture)
-	
-	print("Map set: " + config.name + " - " + config.description)
-	print("Background sprite texture updated")
 
 func _transition_to_map(map_key: String, texture: Texture2D, config: Dictionary):
 	"""Transition to new map with fade effect"""
 	is_transitioning = true
-	
-	print("Starting transition to: " + config.name)
 	
 	# Kill any existing tween first
 	if fade_tween:
@@ -310,18 +284,14 @@ func _change_map_texture(map_key: String, texture: Texture2D, config: Dictionary
 	# Emit signals
 	map_changed.emit(config.name)
 	map_loaded.emit(texture)
-	
-	print("Map changed during transition: " + config.name)
 
 func _on_transition_complete():
 	"""Called when map transition is complete"""
 	is_transitioning = false
-	print("Map transition completed")
 
 func _force_transition_complete():
 	"""Safety function to force transition completion if stuck"""
 	if is_transitioning:
-		print("⚠️ Safety timeout: Forcing transition completion")
 		is_transitioning = false
 		if background_sprite:
 			background_sprite.modulate.a = 1.0  # Ensure it's visible
@@ -329,7 +299,6 @@ func _force_transition_complete():
 func change_to_random_map():
 	"""Change to a random map (different from current)"""
 	if is_transitioning:
-		print("Cannot change map: transition in progress")
 		return false
 	
 	var available_maps = []
@@ -338,7 +307,6 @@ func change_to_random_map():
 			available_maps.append(map_key)
 	
 	if available_maps.is_empty():
-		print("No alternative maps available")
 		return false
 	
 	# Use weighted selection from available maps
@@ -354,7 +322,6 @@ func change_to_random_map():
 		# Force different map
 		selected_map = available_maps[randi() % available_maps.size()]
 	
-	print("🎯 Changing from '" + current_map + "' to '" + selected_map + "'")
 	return load_map(selected_map, true)
 
 func force_map_change():
@@ -372,10 +339,7 @@ func force_map_change():
 		if background_sprite:
 			background_sprite.modulate.a = 1.0
 	
-	# Add debug info
-	print("🎮 Current map before change: " + str(current_map))
 	var result = change_to_random_map()
-	print("🎯 Map change completed with result: " + str(result))
 	
 	return result
 
@@ -405,7 +369,6 @@ func set_map_change_interval(new_interval: float):
 	map_change_interval = new_interval
 	if map_timer:
 		map_timer.wait_time = new_interval
-	print("Map change interval set to: " + str(new_interval) + "s")
 
 func enable_automatic_changes(enabled: bool):
 	"""Enable or disable automatic map changes"""
@@ -413,10 +376,8 @@ func enable_automatic_changes(enabled: bool):
 	if map_timer:
 		if enabled:
 			map_timer.start()
-			print("Automatic map changes enabled")
 		else:
 			map_timer.stop()
-			print("Automatic map changes disabled")
 
 func get_map_probability(map_key: String) -> float:
 	"""Get the probability of a specific map"""
@@ -428,9 +389,6 @@ func set_map_probability(map_key: String, probability: float):
 	"""Set the probability of a specific map"""
 	if map_configs.has(map_key):
 		map_configs[map_key].probability = clamp(probability, 0.0, 1.0)
-		print("Set " + map_key + " probability to: " + str(probability))
-	else:
-		print("Warning: Map '" + map_key + "' not found")
 
 # Map Effect System - Player Buffs/Debuffs
 func get_player_movement_speed_modifier() -> float:
@@ -649,7 +607,7 @@ func _on_special_event_triggered(event_type: String):
 		"treasure_hunt":
 			load_map("coral_reef", true)
 		_:
-			print("Unknown event type: " + event_type)
+			pass
 
 func _on_player_level_changed(new_level: int):
 	"""Adjust map probabilities based on player level"""

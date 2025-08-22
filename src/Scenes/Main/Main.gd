@@ -16,10 +16,8 @@ func _ready():
 
 
 func _on_play_button_pressed() -> void:
-	print("Play button pressed, saving game...")
 	# Save before switching scenes
 	save_manager.save_game()
-	print("Navigating to LevelSelect scene...")
 	get_tree().change_scene_to_file("res://Scenes/LevelSelect/LevelSelect.tscn")
 
 

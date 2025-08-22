@@ -128,27 +128,20 @@ func add_separator():
 
 func _on_continue_pressed():
 	"""Handle continue button press"""
-	print("Continue button pressed")
 	
 	# Unpause the game first
 	get_tree().paused = false
 	
 	if level_completed:
 		# Mark level as completed and unlock next level
-		print("Level was completed, unlocking next level")
 		GlobalVariable.complete_current_level()
-	else:
-		print("Level was finished early, no progression")
 	
 	# Save progress and return to level select
 	var save_manager = preload("res://Common/Utils/SaveManager.gd").new()
 	save_manager.save_game()
-	print("Saved game, returning to level select")
 	
 	# Double check scene file exists
 	if ResourceLoader.exists("res://Scenes/LevelSelect/LevelSelect.tscn"):
-		print("LevelSelect.tscn found, changing scene")
 		get_tree().change_scene_to_file("res://Scenes/LevelSelect/LevelSelect.tscn")
 	else:
-		print("ERROR: LevelSelect.tscn not found! Falling back to Main menu")
 		get_tree().change_scene_to_file("res://Scenes/Main/Main.tscn")

@@ -5,10 +5,12 @@ extends CanvasLayer
 @onready var back_button = $BackButton
 @onready var fish_catch_popup = $FishCatchPopup
 @onready var quest_button = $QuestButton
+@onready var inventory_button = $InventoryButton
 var player_ref : Player
 
 signal game_ended
 signal quest_button_pressed
+signal inventory_button_pressed
 signal finish_game_pressed
 
 func _ready():
@@ -39,12 +41,26 @@ func _ready():
 		quest_button.pressed.connect(_on_quest_button_pressed)
 		# Prevent button from keeping focus after click
 		quest_button.focus_mode = Control.FOCUS_NONE
+	
+	if inventory_button:
+		inventory_button.pressed.connect(_on_inventory_button_pressed)
+		# Prevent button from keeping focus after click
+		inventory_button.focus_mode = Control.FOCUS_NONE
 
 func _process(_delta):
 	update_money_display()
+	# Also sync energy bar with GlobalVariable in case of discrepancies
+	_sync_energy_display()
 
 func update_money_display():
 	money_label.text = "Money: $" + str(GlobalVariable.money)
+
+func _sync_energy_display():
+	"""Sync energy bar with GlobalVariable.player_energy"""
+	if energy_bar and GlobalVariable.player_energy != energy_bar.value:
+		energy_bar.value = GlobalVariable.player_energy
+		# Also update max value in case vitality changed
+		energy_bar.max_value = GlobalVariable.get_max_energy()
 
 func _on_player_energy_changed(new_energy: int):
 	energy_bar.value = new_energy
@@ -53,22 +69,22 @@ func _on_quest_button_pressed():
 	"""Handle quest button press"""
 	quest_button_pressed.emit()
 
+func _on_inventory_button_pressed():
+	"""Handle inventory button press"""
+	inventory_button_pressed.emit()
+
 func _on_finish_game_pressed():
 	"""Handle finish game button press (early exit from level)"""
-	print("Finish game button pressed, emitting signal to Play.gd")
 	finish_game_pressed.emit()
 
 func _on_back_button_pressed():
 	"""This function handles the actual scene change when game is finished"""
-	print("Finishing game and returning to main menu")
 	
 	# Reset potions when back to main (consumed after session)
 	if GlobalVariable.has_slow_potion:
 		GlobalVariable.has_slow_potion = false
-		print("Slow Motion Potion consumed - purchase again in shop if needed")
 	if GlobalVariable.has_speed_potion:
 		GlobalVariable.has_speed_potion = false
-		print("Speed Potion consumed - purchase again in shop if needed")
 	
 	# Save game before going back
 	var save_manager = preload("res://Common/Utils/SaveManager.gd").new()
@@ -86,4 +102,4 @@ func show_fish_catch_popup(fish_data: FishData):
 
 func _on_fish_catch_popup_closed():
 	"""Handle when the fish catch popup is closed"""
-	print("Fish catch popup was closed, game resumed")
+	pass

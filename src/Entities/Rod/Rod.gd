@@ -56,7 +56,6 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("spaceBar"):
 				# Check if player has enough energy to cast
 				if GlobalVariable.player_ref and GlobalVariable.player_ref.energy <= 0:
-					print("Not enough energy to cast!")
 					return
 				rod_state = State.THROW
 		State.THROW:
@@ -90,7 +89,6 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("spaceBar"):
 				# Check if player has enough energy to pull
 				if GlobalVariable.player_ref and GlobalVariable.player_ref.energy <= 0:
-					print("Not enough energy to pull!")
 					return
 				
 				var new_y = $Line.points[0].y - current_power
@@ -185,12 +183,3 @@ func _gain_strength_from_fish(player: Player, fish: Fish):
 	
 	# Add the strength gain as a fractional value
 	player.add_fractional_strength(strength_gain)
-	
-	# Show notification based on fish rarity
-	var rarity_name = FishData.Rarity.keys()[fish.fish_data.rarity]
-	print("Gained %.3f strength from catching %s %s! (%.1f%% progress)" % [
-		strength_gain, 
-		rarity_name.to_lower(), 
-		fish.fish_data.fish_name,
-		player.get_fractional_strength_progress() * 100
-	])

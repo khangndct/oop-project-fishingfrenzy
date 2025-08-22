@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bhdkvxfhddcty" path="res://Scenes/Play/PlayerStatsMenu.tscn" id="6_stats"]
 [ext_resource type="PackedScene" uid="uid://bfy86i4x2yqj4" path="res://Scenes/Play/QuestUI.tscn" id="7_quest"]
 [ext_resource type="PackedScene" uid="uid://br5ckqgvynvgf" path="res://Scenes/Play/LevelCompletionScreen.tscn" id="8_completion"]
+[ext_resource type="PackedScene" uid="uid://c85it8765o7p" path="res://Scenes/Play/InventoryUI.tscn" id="9_inventory"]
 
 [node name="Play" type="Node2D"]
 script = ExtResource("1_2ugot")
@@ -42,5 +43,7 @@ text = "Player Stats"
 layer = 10
 
 [node name="QuestUI" parent="UILayer" instance=ExtResource("7_quest")]
+
+[node name="InventoryUI" parent="UILayer" instance=ExtResource("9_inventory")]
 
 [node name="LevelCompletionScreen" parent="UILayer" instance=ExtResource("8_completion")]
