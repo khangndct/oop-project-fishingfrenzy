@@ -576,3 +576,11 @@ func _on_inventory_energy_restored():
 	"""Handle when energy is restored via inventory"""
 	# This can be used for future inventory effect handling
 	pass
+
+func reset_energy_for_new_session():
+	"""Reset player energy to full for a new fishing session"""
+	player_energy = get_max_energy()
+
+func get_max_energy() -> int:
+	"""Calculate maximum energy based on vitality stat"""
+	return 100 + (player_vitality - 1) * 20

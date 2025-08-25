@@ -25,6 +25,9 @@ func _ready():
 	# Add to play_scene group for easier access by other nodes
 	add_to_group("play_scene")
 	
+	# Reset energy to full for new fishing session
+	GlobalVariable.reset_energy_for_new_session()
+	
 	# Setup inventory manager FIRST (crucial for item effects)
 	_setup_inventory_manager()
 	
@@ -102,11 +105,6 @@ func _setup_map_controller():
 	# Register with GlobalVariable for global access
 	GlobalVariable.set_map_controller_ref(map_controller)
 	
-	# Trigger initial map change when entering play stage
-	# await get_tree().process_frame  # Wait one frame for setup to complete
-	# if map_controller:
-	# 	print("🎮 Triggering initial map change for play stage entry")
-	# 	map_controller.force_map_change()
 
 func _setup_confirmation_dialog():
 	"""Setup confirmation dialog for finish game"""

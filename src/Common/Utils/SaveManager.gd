@@ -13,7 +13,6 @@ func save_game():
 		"player_speed_stat": GlobalVariable.player_speed_stat,
 		"player_vitality": GlobalVariable.player_vitality,
 		"player_luck": GlobalVariable.player_luck,
-		"player_energy": GlobalVariable.player_energy,
 		"player_fractional_strength": GlobalVariable.player_fractional_strength,
 		"player_fractional_speed": GlobalVariable.player_fractional_speed,
 		"player_fractional_vitality": GlobalVariable.player_fractional_vitality,
@@ -82,8 +81,7 @@ func load_game():
 		GlobalVariable.player_vitality = save_data.player_vitality
 	if save_data.has("player_luck"):
 		GlobalVariable.player_luck = save_data.player_luck
-	if save_data.has("player_energy"):
-		GlobalVariable.player_energy = save_data.player_energy
+	# Note: player_energy is NOT loaded - it resets to full each session
 	
 	# Load fractional stats
 	if save_data.has("player_fractional_strength"):
@@ -168,7 +166,7 @@ func clear_data():
 	GlobalVariable.player_speed_stat = 1
 	GlobalVariable.player_vitality = 1
 	GlobalVariable.player_luck = 1
-	GlobalVariable.player_energy = 100
+	GlobalVariable.player_energy = 100  # Energy always resets to full
 	GlobalVariable.player_fractional_strength = 0.0
 	GlobalVariable.player_fractional_speed = 0.0
 	GlobalVariable.player_fractional_vitality = 0.0
